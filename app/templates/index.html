@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+      <h1>Hello, {{ user.nickname }}!</h1>
+       {% for image in images %}
+       <div><p>{{ image.title}} located here: <b>{{ image.url }}</b></p></div>
+       <img src="{{ image.url }}" alt="{{ image.title}}" height="140" width="140">
+       <a href="#" id="get-data">Get JSON data</a>
+       <div id="show-images-data"></div>
+    {% endfor %}
+{% endblock %}
