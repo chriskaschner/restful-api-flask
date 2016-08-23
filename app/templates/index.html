@@ -4,7 +4,12 @@
        {% for image in images %}
        <div><p>{{ image.title}} located here: <b>{{ image.url }}</b></p></div>
        <img src="{{ image.url }}" alt="{{ image.title}}" height="140" width="140">
-       <a href="#" id="get-data">Get JSON data</a>
+       <a href="#" id="show-images-data">Get JSON data</a>
        <div id="show-images-data"></div>
+       <a href="#" id="delete-data">delete JSON data</a>
+       <div id="delete-image-data"></div>
     {% endfor %}
+    <iframe src="https://www.hurl.it/?url=https%3A//chriskaschner.pythonanywhere.com/img/api/v1.0/images">
+  <p>Your browser does not support iframes.</p>
+</iframe>
 {% endblock %}

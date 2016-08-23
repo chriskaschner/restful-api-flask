@@ -26,12 +26,14 @@ images = [
     {
         'id': 1,
         'title': u'Nikes',
-        'url': 'http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg'
+        'url': 'http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg',
+        'results': ''
     },
     {
         'id': 2,
         'title': u'Altra',
-        'url': 'http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg'
+        'url': 'http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg',
+        'results': ''
     }
 ]
 
@@ -48,6 +50,8 @@ def make_public_img(image):
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+### test string
+### curl -i http://127.0.0.1:5000/img/api/v1.0/images
 @app.route('/img/api/v1.0/images', methods=['GET'])
 def get_images():
     return jsonify({'images': [make_public_img(image) for image in images]})
@@ -77,14 +81,33 @@ def create_image():
         'title': request.json.get('title', ""),
         ### url is required, otherwise return error code 400
         'url': request.json['url'],
-        ###todo add logic to retrieve results from image prediction
-        'results': run_inference_on_image(request.json['url'])
+        'results': request.json.get('results', "")
     }
     images.append(image)
     return jsonify({'image': make_public_img(image)}), 201
 
+### test string
+### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/inference/3
+### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
+### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
+@app.route('/img/api/v1.0/inference/<int:img_id>', methods=['PUT'])
+@auth.login_required
+def add_inference(img_id):
+    img = [img for img in images if img['id'] == img_id]
+    if len(img) == 0:
+        abort(404)
+    if not request.json:
+        abort(400)
+    # if 'title' in request.json and type(request.json['title']) != unicode:
+    #     abort(400)
+    url = img[0]['url']
+    print "url of this request is: ", url
+    img[0]['results'] = run_inference_on_image(url)
+    return jsonify({'img': img[0]})
+        ###todo add logic to retrieve results from image prediction
+
 ### test String
-### curl  -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
+### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
 @app.route('/img/api/v1.0/images/<int:img_id>', methods=['PUT'])
 @auth.login_required
 def update_image(img_id):
@@ -102,7 +125,7 @@ def update_image(img_id):
 ### test String
 ### curl  -u ReturnPath:python -i -H "Content-Type: application/json" -X DELETE -d http://127.0.0.1:5000/img/api/v1.0/images/3
 @app.route('/img/api/v1.0/images/<int:img_id>', methods=['DELETE'])
-@auth.login_required
+# @auth.login_required
 def delete_image(img_id):
     img = [img for img in images if img['id'] == img_id]
     if len(img) == 0:
@@ -112,12 +135,8 @@ def delete_image(img_id):
 
 
 ### Model and Labels files for TensorFlow
-modelFullPath = './static/output_graph.pb'
-labelsFullPath = './static/output_labels.txt'
-
-results_name = []
-results_score = []
-results = []
+modelFullPath = './app/static/output_graph.pb'
+labelsFullPath = './app/static/output_labels.txt'
 
 def create_graph():
     """Creates a graph from saved GraphDef file and returns a saver."""
@@ -129,6 +148,10 @@ def create_graph():
 
 def run_inference_on_image(imgURL):
     answer = None
+    results_dict = {}
+    results = []
+    results_name = []
+    results_score = []
     imagePath, headers = urllib.urlretrieve(imgURL)
     if not tf.gfile.Exists(imagePath):
         tf.logging.fatal('File does not exist %s', imagePath)
