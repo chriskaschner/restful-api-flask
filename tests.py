@@ -32,5 +32,15 @@ class TestCase(unittest.TestCase):
         assert nickname2 != 'john'
         assert nickname2 != nickname
 
+    def test_update_inference_results(self):
+        # run the same inference twice on the same image
+        pass
+
+    def test_inference_results_different_images(self):
+        # run the inference on 2 different images, results should differ
+        pass
+
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -4,6 +4,7 @@ import json
 import urllib
 from flask import Flask, jsonify, abort, make_response, request, url_for
 from flask.ext.httpauth import HTTPBasicAuth
+from PIL import Image
 
 auth = HTTPBasicAuth()
 app = Flask(__name__)
@@ -21,19 +22,22 @@ def unauthorized():
 # datastore for this example; ###todo - add database
 ###todo replace URL with URI to be overly pedantic
 ###todo sort out img vs image vs images usage
+###todo update example images to reflect good predictions
 
 images = [
     {
         'id': 1,
         'title': u'Nikes',
         'url': 'http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg',
-        'results': ''
+        'results': '',
+        'resize': False
     },
     {
         'id': 2,
         'title': u'Altra',
         'url': 'http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg',
-        'results': ''
+        'results': '',
+        'resize': False
     }
 ]
 
@@ -81,13 +85,13 @@ def create_image():
         'title': request.json.get('title', ""),
         ### url is required, otherwise return error code 400
         'url': request.json['url'],
-        'results': request.json.get('results', "")
+        'results': request.json.get('results', ""),
+        'resize': False
     }
     images.append(image)
     return jsonify({'image': make_public_img(image)}), 201
 
 ### test string
-### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/inference/3
 ### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
 ### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
 @app.route('/img/api/v1.0/inference/<int:img_id>', methods=['PUT'])
@@ -101,10 +105,8 @@ def add_inference(img_id):
     # if 'title' in request.json and type(request.json['title']) != unicode:
     #     abort(400)
     url = img[0]['url']
-    print "url of this request is: ", url
     img[0]['results'] = run_inference_on_image(url)
     return jsonify({'img': img[0]})
-        ###todo add logic to retrieve results from image prediction
 
 ### test String
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
@@ -133,6 +135,23 @@ def delete_image(img_id):
     images.remove(img[0])
     return jsonify({'result': True})
 
+### test string
+### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
+### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
+# @app.route('/img/api/v1.0/resize/<int:img_id>', methods=['PUT'])
+# @auth.login_required
+#      ## if bigger than desired size
+#      ## resize image to smaller size
+#      ## else set resized to True and move on
+# def resize_image(img_id):
+#     img = [img for img in images if img['id'] == img_id]
+#     if len(img) == 0:
+#         abort(404)
+#     if not request.json:
+#         abort(400)
+#     url = img[0]['url']
+#     img[0]['results'] = run_inference_on_image(url)
+#     return jsonify({'img': img[0]})
 
 ### Model and Labels files for TensorFlow
 modelFullPath = './app/static/output_graph.pb'
@@ -146,13 +165,30 @@ def create_graph():
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
 
+def get_image_dims(imgURL):
+    imagePath = urllib.urlretrieve(imgURL)
+    im=Image.open(file)
+    width, height = im.size
+    print "width is ", width
+    print "height is ", height
+    return width, height
+
+# def resize_image(imgURL):
+#     pass
+     ## if bigger than desired size
+     ## resize image to smaller size
+     ## else set resized to True and move on
+
 def run_inference_on_image(imgURL):
     answer = None
+    ###todo clean up these lists/ dictionaries
     results_dict = {}
     results = []
     results_name = []
     results_score = []
+    ###todo delete this comment if still functioning
     imagePath, headers = urllib.urlretrieve(imgURL)
+    # imagePath = urllib.urlretrieve(imgURL)
     if not tf.gfile.Exists(imagePath):
         tf.logging.fatal('File does not exist %s', imagePath)
         return answer
