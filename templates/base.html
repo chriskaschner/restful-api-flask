@@ -1,0 +1,16 @@
+<html>
+<head>
+  {% if title %}
+  <title>{{ title }} - RESTful API</title>
+  {% else %}
+  <title>Welcome to RESTful API</title>
+  {% endif %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="static/retrieveJSON.js"></script>
+</head>
+  <body>
+    <div>RESTful API: <a href="/index">Home</a></div>
+    <hr>
+    {% block content %}{% endblock %}
+  </body>
+</html>

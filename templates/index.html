@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+      <h1>Hello, {{ user.nickname }}!</h1>
+       {% for image in images %}
+       <div><p>{{ image.title}} located here: <b>{{ image.url }}</b></p></div>
+       <img src="{{ image.url }}" alt="{{ image.title}}" height="140" width="140">
+       <a href="#" id="show-images-data">Get JSON data</a>
+       <div id="show-images-data"></div>
+       <a href="#" id="delete-data">delete JSON data</a>
+       <div id="delete-image-data"></div>
+    {% endfor %}
+    <iframe src="https://www.hurl.it/?url=https%3A//chriskaschner.pythonanywhere.com/img/api/v1.0/images">
+  <p>Your browser does not support iframes.</p>
+</iframe>
+<a class="jsbin-embed" href="http://jsbin.com/tifopodomu/embed?js,console">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.39.14"></script>
+{% endblock %}
