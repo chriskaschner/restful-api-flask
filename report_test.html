@@ -1,0 +1,454 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>dafsadfsa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style type="text/css">
+    body,p,td,div {
+	font-family: Helvetica,Arial,sans-serif;
+	line-height: 1.4em;
+	font-size: 14px;
+	color: #111;
+	word-wrap: break-word
+}
+p {
+	margin: 0 0 1.7em 0
+}
+a {
+	color: rgb(13,110,161);
+	text-decoration: none;
+	-webkit-transition: color .2s ease-in-out
+}
+a:hover {
+	color: #3593d9
+}
+h1.doctitle {
+	background: #eee;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+	line-height: 28px;
+	margin: 0;
+	padding: 0 10px;
+	border-bottom: solid 1px #aaa;
+	white-space: nowrap
+}
+h1,h2,h3,h4,h5 {
+	line-height: 1.1em
+}
+h1 {
+	font-size: 24px;
+	color: #000;
+	margin: 12px 0 15px 0
+}
+h2 {
+	font-size: 20px;
+	color: #111;
+	width: auto;
+	margin: 15px 0 10px 2px
+}
+h2 em {
+	line-height: 1.6em;
+	font-size: 12px;
+	color: #111;
+	text-shadow: 0 1px 0 #FFF;
+	padding-left: 10px
+}
+h3 {
+	font-size: 20px;
+	color: #111
+}
+h4 {
+	font-size: 14px;
+	color: #111;
+	margin-bottom: 1.3em
+}
+.footnote {
+	font-size: .8em;
+	vertical-align: super;
+	color: rgb(13,110,161)
+}
+#contentdiv img {
+	max-width: 100%
+}
+dt {
+	font-weight: bold
+}
+dd {
+	margin-bottom: 1em
+}
+@media print {body {
+	overflow: auto
+}
+#wrapper {
+	background: #fff;
+	position: relative
+}
+#contentdiv {
+	position: relative;
+	background: transparent;
+	color: #303030;
+	text-indent: 0px;
+	padding: 10px
+}
+
+}
+@media screen {body {
+	overflow: hidden
+}
+#wrapper {
+	background: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	-webkit-box-shadow: inset 0px 0px 4px #8F8D87
+}
+#contentdiv {
+	position: fixed;
+	top: 27px;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+	background: transparent;
+	color: #303030;
+	overflow: auto;
+	text-indent: 0px;
+	padding: 10px
+}
+#contentdiv::-webkit-scrollbar {
+	width: 6px
+}
+#contentdiv::-webkit-scrollbar:horizontal {
+	height: 6px;
+	display: none
+}
+#contentdiv::-webkit-scrollbar-track {
+	background: transparent;
+	-webkit-border-radius: 0;
+	right: 10px
+}
+#contentdiv::-webkit-scrollbar-track:disabled {
+	display: none
+}
+#contentdiv::-webkit-scrollbar-thumb {
+	border-width: 0;
+	min-height: 20px;
+	background: #777;
+	opacity: 0.4;
+	-webkit-border-radius: 5px
+}
+
+}
+li>p {
+	margin: 0 0 1em
+}
+ul ul,ul ol {
+	margin-bottom: 1em
+}
+
+  </style>
+</head>
+
+<body>
+
+  <div id="wrapper">
+    <header>
+      <h1 class="doctitle">dafsadfsa</h1>
+    </header>
+    
+    <div id="contentdiv">
+      <!-- ## I. Definition
+## II. Next def
+
+### Project Overview
+
+An [estimated 2 trillion photos](http://ben-evans.com/benedictevans/2015/8/19/how-many-pictures)
+
+![AltraNikeLogo](images/AltraNikeLogo.png) -->
+
+<p>Your API must have:
+- at least three endpoints
+- all endpoints must be linked in some way</p>
+
+<ul>
+<li>A single page website that allows for retrieval of data from your endpoints
+-</li>
+<li>Share your application and provide a link where it can be tested</li>
+<li>Design Document
+
+<ul>
+<li>Please pay careful attention to Rest best practices and describe the application in detail in a design document including why you chose the approach you did.</li>
+</ul></li>
+<li>Unit Tests
+
+<ul>
+<li>Unit tests are included in the file &#8220;test_app.py&#8221;</li>
+<li>Also, include tests that validate success.</li>
+</ul></li>
+</ul>
+
+<h2 id="endpoints">3 endpoints</h2>
+
+<h3 id="imagesfilestore">1. Images File Store</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">HTTP Method</th>
+	<th style="text-align:left;">URI</th>
+	<th style="text-align:left;">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">GET</td>
+	<td style="text-align:left;">[hostname]/img/api/v1.0/imgs</td>
+	<td style="text-align:left;">Retrieve list of images</td>
+</tr>
+<tr>
+	<td style="text-align:left;">POST</td>
+	<td style="text-align:left;">[hostname]/img/api/v1.0/imgs</td>
+	<td style="text-align:left;">Create new image</td>
+</tr>
+<tr>
+	<td style="text-align:left;">GET</td>
+	<td style="text-align:left;">[hostname]/img/api/v1.0/imgs/<a href="#img_id">img_id</a></td>
+	<td style="text-align:left;">Retrieve an individual image</td>
+</tr>
+<tr>
+	<td style="text-align:left;">PUT</td>
+	<td style="text-align:left;">[hostname]/img/api/v1.0/imgs/<a href="#img_id">img_id</a></td>
+	<td style="text-align:left;">Update an existing image</td>
+</tr>
+<tr>
+	<td style="text-align:left;">DELETE</td>
+	<td style="text-align:left;">[hostname]/img/api/v1.0/imgs/<a href="#img_id">img_id</a></td>
+	<td style="text-align:left;">Delete an existing image</td>
+</tr>
+</tbody>
+</table>
+<h4 id="gethostnameimgapiv1.0imgs">GET [hostname]/img/api/v1.0/imgs</h4>
+
+<pre class="embedcurl">curl -i http://chriskaschner.pythonanywhere.com/img/api/v1.0/images</pre>
+
+<h5 id="results:">Results:</h5>
+
+<pre><code>        HTTP/1.0 200 OK
+        Content-Type: application/json
+        Content-Length: 502
+        Server: Werkzeug/0.9.6 Python/2.7.12
+        Date: Wed, 24 Aug 2016 22:06:07 GMT
+
+        {
+          &quot;images&quot;: [
+            {
+              &quot;resize&quot;: false,
+              &quot;results&quot;: &quot;&quot;,
+              &quot;size&quot;: &quot;&quot;,
+              &quot;title&quot;: &quot;Nikes&quot;,
+              &quot;uri&quot;: &quot;http://127.0.0.1:5000/img/api/v1.0/images/1&quot;,
+              &quot;url&quot;: &quot;http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg&quot;
+            },
+            {
+              &quot;resize&quot;: false,
+              &quot;results&quot;: &quot;&quot;,
+              &quot;size&quot;: &quot;&quot;,
+              &quot;title&quot;: &quot;Altra&quot;,
+              &quot;uri&quot;: &quot;http://127.0.0.1:5000/img/api/v1.0/images/2&quot;,
+              &quot;url&quot;: &quot;http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg&quot;
+            }
+          ]
+        } 
+</code></pre>
+
+<h4 id="posthostnameimgapiv1.0imgs">POST [hostname]/img/api/v1.0/imgs</h4>
+
+<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X POST -d '{"url":"http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"}' http://127.0.0.1:5000/img/api/v1.0/images</pre>
+
+<h5 id="results:">Results:</h5>
+
+<pre><code>HTTP/1.0 201 CREATED
+Content-Type: application/json
+Content-Length: 233
+Server: Werkzeug/0.9.6 Python/2.7.12
+Date: Wed, 24 Aug 2016 22:13:57 GMT
+
+{
+  &quot;image&quot;: {
+    &quot;resize&quot;: false,
+    &quot;results&quot;: &quot;&quot;,
+    &quot;size&quot;: &quot;&quot;,
+    &quot;title&quot;: &quot;&quot;,
+    &quot;uri&quot;: &quot;http://127.0.0.1:5000/img/api/v1.0/images/3&quot;,
+    &quot;url&quot;: &quot;http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg&quot;
+  }
+</code></pre>
+
+<h4 id="img_id">GET [hostname]/img/api/v1.0/imgs/</h4>
+
+<pre class="embedcurl">curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/image/3</pre>
+
+<h5 id="results:">Results:</h5>
+
+<pre><code>HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 186
+Server: Werkzeug/0.9.6 Python/2.7.12
+Date: Wed, 24 Aug 2016 22:19:02 GMT
+
+{
+  &quot;img&quot;: {
+    &quot;id&quot;: 3,
+    &quot;resize&quot;: false,
+    &quot;results&quot;: &quot;&quot;,
+    &quot;size&quot;: &quot;&quot;,
+    &quot;title&quot;: &quot;&quot;,
+    &quot;url&quot;: &quot;http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg&quot;
+  }
+
+
+
+
+        |
+</code></pre>
+
+<h4 id="img_id">PUT [hostname]/img/api/v1.0/imgs/</h4>
+
+<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3</pre>
+
+<h5 id="results:">Results:</h5>
+
+<pre><code>HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 195
+Server: Werkzeug/0.9.6 Python/2.7.12
+Date: Wed, 24 Aug 2016 22:43:20 GMT
+
+{
+  &quot;img&quot;: {
+    &quot;id&quot;: 3,
+    &quot;resize&quot;: false,
+    &quot;results&quot;: &quot;&quot;,
+    &quot;size&quot;: &quot;&quot;,
+    &quot;title&quot;: &quot;C-ron-ron&quot;,
+    &quot;url&quot;: &quot;http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg&quot;
+  }
+</code></pre>
+
+<p>| DELETE | [hostname]/img/api/v1.0/imgs/<a href="#img_id">img_id</a> | Delete an existing image |</p>
+
+<p>Results from</p>
+
+<h2 id="imageinference">2. Image Inference</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">HTTP Method</th>
+	<th style="text-align:left;">URI</th>
+	<th style="text-align:left;">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">PUT</td>
+	<td style="text-align:left;">[hostname]/img/api/v1.0/inference/<a href="#img_id">img_id</a></td>
+	<td style="text-align:left;">runs inference on an existing image and adds results to image file store entry</td>
+</tr>
+</tbody>
+</table>
+<h2 id="imageinference">3. Image Inference</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">HTTP Method</th>
+	<th style="text-align:left;">URI</th>
+	<th style="text-align:left;">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">PUT</td>
+	<td style="text-align:left;">[hostname]/img/api/v1.0/resize/<a href="#img_id">img_id</a></td>
+	<td style="text-align:left;">measures size of existing image and adds results to image file store entry</td>
+</tr>
+</tbody>
+</table>
+<p>curl -u ReturnPath:python -X PUT -H &#8220;Content-Type: application/json&#8221; -d &#8216;{&#8220;id&#8221;:3}&#8217; http://127.0.0.1:5000/img/api/v1.0/inference/3</p>
+
+<pre class="embedcurl">curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2</pre>
+
+<pre><code>HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 415
+Server: Werkzeug/0.9.6 Python/2.7.12
+Date: Wed, 24 Aug 2016 22:47:30 GMT
+
+{
+  &quot;img&quot;: {
+    &quot;id&quot;: 2,
+    &quot;resize&quot;: false,
+    &quot;results&quot;: {
+      &quot;results_name_1&quot;: &quot;neither&quot;,
+      &quot;results_name_2&quot;: &quot;altra&quot;,
+      &quot;results_name_3&quot;: &quot;nike&quot;,
+      &quot;results_score_1&quot;: &quot;\&quot;0.7680\&quot;&quot;,
+      &quot;results_score_2&quot;: &quot;\&quot;0.2004\&quot;&quot;,
+      &quot;results_score_3&quot;: &quot;\&quot;0.0316\&quot;&quot;
+    },
+    &quot;size&quot;: &quot;&quot;,
+    &quot;title&quot;: &quot;Altra&quot;,
+    &quot;url&quot;: &quot;http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg&quot;
+  }
+}
+</code></pre>
+
+<p>REST</p>
+
+<h2 id="improvements:">Improvements:</h2>
+
+<ul>
+<li>IAM roles for AWS http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-api.html</li>
+<li>better type checking for images</li>
+</ul>
+
+<script src="https://www.embedcurl.com/embedcurl.min.js" async></script>
+
+    </div>
+
+  </div> <!-- end of #container -->
+
+
+  <script src="/Users/Chris/Library/Application Support/nvALT/jquery.js"></script>    <script>(function($){$('h1,h2,h3,h4').each(function(){$(this).html($(this).text().replace(/([^\\s])\\s+([^\\s]{1,5})\\s*$/,'$1&nbsp;$2'));});$('a[href^=#]').click(function(){if(location.pathname.replace(/^\\//,'')==this.pathname.replace(/^\\//,'')&&location.hostname==this.hostname){var $target=$(this.hash);$target=$target.length&&$target||$('[id='+this.hash.slice(1)+']');if($target.length){var targetOffset=$target.offset().top;$('#contentdiv').animate({scrollTop:targetOffset-40},1000);return false;}}});$('#contentdiv').scroll(function(){if(this.scrollTop>150){if($('#backtotop').length==0)
+$('h1.doctitle').append($('<a href="javascript:void()" id="backtotop" />').text('Back to top').css({'float':'right','display':'none'}).click(function(){$('#contentdiv').animate({scrollTop:0},1000);}));$('#backtotop').fadeIn('slow');}else{$('#backtotop').fadeOut('slow',function(){$(this).remove();});}});})(jQuery);
+  </script>
+</body>
+</html>

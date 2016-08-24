@@ -1,17 +1,15 @@
-## I. Definition
+<!-- ## I. Definition
 ## II. Next def
 
 ### Project Overview
 
 An [estimated 2 trillion photos](http://ben-evans.com/benedictevans/2015/8/19/how-many-pictures)
 
-![AltraNikeLogo](images/AltraNikeLogo.png)
+![AltraNikeLogo](images/AltraNikeLogo.png) -->
 
 Your API must have:
 - at least three endpoints
 - all endpoints must be linked in some way
-
-<pre class="embedcurl">curl -i http://chriskaschner.pythonanywhere.com/img/api/v1.0/images</pre>
 
 - A single page website that allows for retrieval of data from your endpoints
 -
@@ -117,7 +115,30 @@ Date: Wed, 24 Aug 2016 22:19:02 GMT
 
 
             |
-|     PUT      |        [hostname]/img/api/v1.0/imgs/[img_id]   | Update an existing image     |
+#### PUT [hostname]/img/api/v1.0/imgs/[img_id]
+
+<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3</pre>
+
+##### Results:
+
+```
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 195
+Server: Werkzeug/0.9.6 Python/2.7.12
+Date: Wed, 24 Aug 2016 22:43:20 GMT
+
+{
+  "img": {
+    "id": 3,
+    "resize": false,
+    "results": "",
+    "size": "",
+    "title": "C-ron-ron",
+    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"
+  }
+	```
+
 |     DELETE   |        [hostname]/img/api/v1.0/imgs/[img_id]   | Delete an existing image     |
 
 Results from
@@ -136,7 +157,36 @@ Results from
 |--------------|--------------------------------------------------|--------------------------------------------------------------------------|
 |     PUT      |     [hostname]/img/api/v1.0/resize/[img_id]      |measures size of existing image and adds results to image file store entry|
 
+curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
 
+<pre class="embedcurl">curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2</pre>
+
+
+```
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 415
+Server: Werkzeug/0.9.6 Python/2.7.12
+Date: Wed, 24 Aug 2016 22:47:30 GMT
+
+{
+  "img": {
+    "id": 2,
+    "resize": false,
+    "results": {
+      "results_name_1": "neither",
+      "results_name_2": "altra",
+      "results_name_3": "nike",
+      "results_score_1": "\"0.7680\"",
+      "results_score_2": "\"0.2004\"",
+      "results_score_3": "\"0.0316\""
+    },
+    "size": "",
+    "title": "Altra",
+    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg"
+  }
+}
+	```
 
 REST
 

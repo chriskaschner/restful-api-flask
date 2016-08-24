@@ -112,8 +112,8 @@ def create_image():
     return jsonify({'image': make_public_img(image)}), 201
 
 ### test string
-### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
-### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
+### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
+### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
 @app.route('/img/api/v1.0/inference/<int:img_id>', methods=['PUT'])
 # @auth.login_required
 def add_inference(img_id):
@@ -124,7 +124,7 @@ def add_inference(img_id):
         abort(400)
     url = img[0]['url']
     img[0]['results'] = run_inference_on_image(url)
-    return jsonify({'img': img[0]})
+    return jsonify({'img': img[0]}), 200
 
 ### test String
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
