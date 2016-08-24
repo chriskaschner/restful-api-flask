@@ -155,6 +155,8 @@ def delete_image(img_id):
 
 ### test string
 ### curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/resize/2
+### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
+### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/img/api/v1.0/resize/3
 @app.route('/img/api/v1.0/resize/<int:img_id>', methods=['PUT'])
 # @auth.login_required
 def get_image_dimensions(img_id):

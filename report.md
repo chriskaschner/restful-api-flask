@@ -7,6 +7,39 @@ An [estimated 2 trillion photos](http://ben-evans.com/benedictevans/2015/8/19/ho
 
 ![AltraNikeLogo](images/AltraNikeLogo.png) -->
 
+## REST Architecture
+
+Representational state transfer (REST) originally specified in the [5th chapter](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) of Roy Fielding's PhD thesis "Architectural Styles and
+the Design of Network-based Software Architectures" which specifies 6 constraints for the REST architecture.
+
+1. Client-Server
+1. Stateless
+1. Cache
+1. Uniform Interface - including HATEOAS (Hypermedia As The Engine Of Application State)
+https://en.wikipedia.org/wiki/HATEOAS
+1. Layered System
+1. Code-On-Demand
+
+REST defines an architectural style used in web development.  Because it defined an architecture and not a specification, there is room for interpretation.
+
+###### stuff I do that makes sense
+1. GET requests get data
+1. PUT requests update existing data
+1. POST requests create new data
+1. DELETE requests delete data
+
+###### Versioning
+There's some argument about *where* to place the version information for your API, but not *if* you should version it.  I place versioning info in the URL.  The other alternative is in the header.
+
+###### JSON
+It's ubiquitous.  It's human readable.  It's easy to work with.
+
+### References
+http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+
+
+Versioning
+
 Your API must have:
 - at least three endpoints
 - all endpoints must be linked in some way
@@ -137,60 +170,85 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
     "title": "C-ron-ron",
     "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"
   }
-	```
+```
 
-|     DELETE   |        [hostname]/img/api/v1.0/imgs/[img_id]   | Delete an existing image     |
+#### DELETE [hostname]/img/api/v1.0/imgs/[img_id]
 
-Results from
+<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X DELETE http://127.0.0.1:5000/img/api/v1.0/images/3</pre>
 
+##### Results:
 
+```
+	HTTP/1.0 200 OK
+	Content-Type: application/json
+	Content-Length: 20
+	Server: Werkzeug/0.9.6 Python/2.7.12
+	Date: Wed, 24 Aug 2016 23:13:36 GMT
 
-
+	{
+	  "result": true
+	}
+```
 
 ## 2. Image Inference
-|  HTTP Method |                           URI                    |                                  Action                                      |
-|--------------|--------------------------------------------------|------------------------------------------------------------------------------|
-|     PUT      |     [hostname]/img/api/v1.0/inference/[img_id]   |runs inference on an existing image and adds results to image file store entry|
 
-## 3. Image Inference
-|  HTTP Method |                           URI                    |                                   Action                                 |
-|--------------|--------------------------------------------------|--------------------------------------------------------------------------|
-|     PUT      |     [hostname]/img/api/v1.0/resize/[img_id]      |measures size of existing image and adds results to image file store entry|
-
-curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
+#### PUT [hostname]/img/api/v1.0/resize/[img_id]
 
 <pre class="embedcurl">curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2</pre>
 
-
+##### Results:
 ```
-HTTP/1.0 200 OK
-Content-Type: application/json
-Content-Length: 415
-Server: Werkzeug/0.9.6 Python/2.7.12
-Date: Wed, 24 Aug 2016 22:47:30 GMT
+	HTTP/1.0 200 OK
+	Content-Type: application/json
+	Content-Length: 415
+	Server: Werkzeug/0.9.6 Python/2.7.12
+	Date: Wed, 24 Aug 2016 22:47:30 GMT
 
-{
-  "img": {
-    "id": 2,
-    "resize": false,
-    "results": {
-      "results_name_1": "neither",
-      "results_name_2": "altra",
-      "results_name_3": "nike",
-      "results_score_1": "\"0.7680\"",
-      "results_score_2": "\"0.2004\"",
-      "results_score_3": "\"0.0316\""
-    },
-    "size": "",
-    "title": "Altra",
-    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg"
-  }
-}
-	```
+	{
+	  "img": {
+	    "id": 2,
+	    "resize": false,
+	    "results": {
+	      "results_name_1": "neither",
+	      "results_name_2": "altra",
+	      "results_name_3": "nike",
+	      "results_score_1": "\"0.7680\"",
+	      "results_score_2": "\"0.2004\"",
+	      "results_score_3": "\"0.0316\""
+	    },
+	    "size": "",
+	    "title": "Altra",
+	    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg"
+	  }
+	}
+```
 
-REST
+## 3. Image Resize
 
+<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/img/api/v1.0/resize/3</pre>
 
+##### Results:
+```
+	HTTP/1.0 200 OK
+	Content-Type: application/json
+	Content-Length: 235
+	Server: Werkzeug/0.9.6 Python/2.7.12
+	Date: Wed, 24 Aug 2016 23:18:53 GMT
+
+	{
+	  "img": {
+	    "id": 2,
+	    "resize": false,
+	    "results": "",
+	    "size": {
+	      "height": 480,
+	      "width": 480
+	    },
+	    "title": "Altra",
+	    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg"
+	  }
+	}
+```
 ## Improvements:
 - IAM roles for AWS http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-api.html
 - better type checking for images
