@@ -5,7 +5,6 @@ import urllib
 from flask import Flask, jsonify, render_template, abort, make_response, request, url_for, Markup
 from flask.ext.httpauth import HTTPBasicAuth
 from PIL import Image
-import markdown
 
 auth = HTTPBasicAuth()
 app = Flask(__name__)
@@ -20,9 +19,6 @@ def get_password(username):
 def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized Access'}), 403)
 
-###todo replace URL with URI to be overly pedantic
-###todo update example images to reflect good predictions
-
 images = [
     {
         'id': 1,
@@ -35,7 +31,7 @@ images = [
     {
         'id': 2,
         'title': u'Altra',
-        'url': 'http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg',
+        'url': 'https://s3-us-west-2.amazonaws.com/imgdirect/altra.jpg',
         'results': '',
         'resize': False,
         'size': ""
@@ -55,28 +51,22 @@ def make_public_img(image):
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-# @app.route('/markdown')
-# def get_markdown():
-#     with open('markdown.txt', 'r') as markdown_file:
-#         content=markdown_file.read()
-#     content = Markup(markdown.markdown(content))
-#     return render_template('markdown.html', **locals())
-
-
 ### test string
 ### curl -i http://127.0.0.1:5000/img/api/v1.0/images
 @app.route('/img/api/v1.0/images', methods=['GET'])
 def get_images():
     return jsonify({'images': [make_public_img(image) for image in images]})
 
-# @app.route('/')
-# @app.route('/index')
+@app.route('/')
+@app.route('/index')
 # def index():
 #     user = {'nickname': 'ReturnPath'} # fake user
 #     return render_template('index.html',
 #                             title='Home',
 #                             user=user,
 #                             images=images)
+def index():
+    return "Hello, World!  This isn't very intersting, maybe you should try connecting to http://10la.pythonanywhere.com/img/api/v1.0/images/"
 
 ### test String
 ### curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/images/2
@@ -114,8 +104,8 @@ def create_image():
 
 ### test string
 ### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
-### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
-### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://10la.pythonanywhere.com/img/api/v1.0/inference/2
+### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/1
+### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://10la.pythonanywhere.com/img/api/v1.0/inference/1
 @app.route('/img/api/v1.0/inference/<int:img_id>', methods=['PUT'])
 @auth.login_required
 def add_inference(img_id):
@@ -171,36 +161,6 @@ def get_image_dimensions(img_id):
     img[0]['size'] = get_image_dims(url)
     return jsonify({'img': make_public_img(img[0])}), 200
 
-###todo add this functionality
-# ### test string
-# ### curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
-# ## curl -u ReturnPath:python -X PUT -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
-# @app.route('/img/api/v1.0/resize/<int:img_id>', methods=['PUT'])
-# #@auth.login_required
-# def resize_image(img_id):
-#      ## if bigger than desired size
-#      desiredSize = 480
-#
-#      if img[0]['size']['height'] or img[0]['size']['width'] > desiredSize:
-#          print "do work and resize"
-#          img[0]['resize'] = True
-#      else:
-#          img[0]['resize'] = True
-#      ## resize image to smaller size
-#      ## else set resized to True and move on
-#
-#
-# def resize_image(img_id):
-#     img = [img for img in images if img['id'] == img_id]
-#     if len(img) == 0:
-#         abort(404)
-#     if not request.json:
-#         abort(400)
-#     url = img[0]['url']
-#     img[0]['results'] = resize_image(url)
-#     img[0]['resize'] = True
-#     return jsonify({'img': img[0]})
-
 def get_image_dims(imgURL):
     imagePath, headers = urllib.urlretrieve(imgURL)
     img=Image.open(imagePath)
@@ -234,7 +194,6 @@ def create_graph():
 
 def run_inference_on_image(imgURL):
     # answer = None
-    ###todo clean up these lists/ dictionaries
     results_dict = {}
     results = []
     results_name = []

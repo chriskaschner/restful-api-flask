@@ -19,10 +19,10 @@ The challenge specifies the following for a successful submission:
 - include tests that validate success.
 
 ### Deliverables
-- Using Python and Flask, I created this website- [a single page](https://chriskaschner.github.io/restful-api-flask/) that allows for retrieval of data from my endpoints.  The 3 endpoints are described in detail in the [API Documentation](#API Documentation).
+- Using Python and Flask, I created this website- [a single page](https://chriskaschner.github.io/restful-api-flask/) that allows for retrieval of data from my endpoints.  The 3 endpoints are described in detail in the API Documentation section below.
 - In order to share my application and provide links where it can be tested - links and curl embeds are included throughout this document that allow for interacting with the API directly.  The API is currently live at [http://10la.pythonanywhere.com/img/api/v1.0/images](http://10la.pythonanywhere.com/img/api/v1.0/images) and all references to a [hostname] in this documentation refers to `http://10la.pythonanywhere.com`.  The [application](https://github.com/chriskaschner/restful-api-flask/blob/master/original_app.py), it's [unit tests](https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py), and all supporting documentation can be found at the [project's GitHub](https://github.com/chriskaschner/restful-api-flask).  
-- This webpage represents the design document.  In particular the sections dedicated to the [REST Architecture](#REST Architecture) and [API Documentation](#API Documentation) discuss the design process in detail.
-- Unit tests, including those that validate success, are available in a number of ways.  Basic functionality can be verified by executing each curl command in order it appears in the the [API Documentation](#API Documentation) section.  A copy of the output of the unit test application is included in the [Unit Tests](#Unit Tests) section.  Finally, the [test application](https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py) can be downloaded from GitHub and run locally.
+- This webpage represents the design document.  In particular the sections dedicated to the REST Architecture and API Documentation discuss the design process in detail.
+- Unit tests, including those that validate success, are available in a number of ways.  Basic functionality can be verified by executing each curl command in order it appears in the the API Documentation section.  A copy of the output of the unit test application is included in the Unit Tests section.  Finally, the [test application](https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py) can be downloaded from GitHub and run locally.
 
 ### REST Architecture
 
@@ -45,9 +45,9 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 ### My project's interpretation of REST constraints
 
 1. Client-Server - Yes, the API is hosted on a server both physically and logically separated from the clients I'm using to consume it.
-1. Stateless - Yes, outside of the root URI for the API clients must authenticate upon every request.  Although as listed in the [improvements section](#Improvements), adding rate limiting would potentially remove this constraint.  In a stateless system how would you identify an un-authenticated user in order to limit their number of requests?
-1. Cache - Yes, this is being met when the API is consumed in a browser.  However, as discussed in the [improvements section](#Improvements), adding etags would improve the existing solution.
-1. Layered System - Yes, Similar to Client-Server above, all requests are authenticated separately, and there are no systems in place that would attempt to identify a client merely by its requests.  I use HTTP Basic Auth and discuss some ways this could be improved in the [improvements section](#Improvements).
+1. Stateless - Yes, outside of the root URI for the API clients must authenticate upon every request.  Although as listed in the improvements section, adding rate limiting would potentially remove this constraint.  In a stateless system how would you identify an un-authenticated user in order to limit their number of requests?
+1. Cache - Yes, this is being met when the API is consumed in a browser.  However, as discussed in the improvements section, adding etags would improve the existing solution.
+1. Layered System - Yes, Similar to Client-Server above, all requests are authenticated separately, and there are no systems in place that would attempt to identify a client merely by its requests.  I use HTTP Basic Auth and discuss some ways this could be improved in the improvements section.
 1. Code-On-Demand - No, I do not meet this [optional requirement](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7) of REST.  One potential application that I could see this constraint being used for is to download and execute JavaScript in the browser.
 1. Uniform Interface -
 	1. Identification of resources - Yes, each resource gets its own unique identifier URI such as: `/img/api/v1.0/images/3` and each collections of resources has an udentifier `/img/api/v1.0/images`.  I also include versioning information in this category.  And while there is some argument about *where* to place the version information for your API, there is none as to *if* you should version it.  I place versioning info in the URI.  The other alternative is in the header.
@@ -58,7 +58,7 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 		- PUT requests update existing data - although [there](http://stackoverflow.com/questions/630453/put-vs-post-in-rest) are differing [opinions](https://stormpath.com/blog/fundamentals-rest-api-design) that says you should use POST for everything.
 		- DELETE requests delete data
 
-	1. HATEOAS [Hypermedia As The Engine Of Application State](https://en.wikipedia.org/wiki/HATEOAS) - Yes, Every resource request returns a URI property (except DELETE) that is the full URI of where a resource resides.  Potential improvements for this feature are [discussed below](#Improvements).
+	1. HATEOAS [Hypermedia As The Engine Of Application State](https://en.wikipedia.org/wiki/HATEOAS) - Yes, Every resource request returns a URI property (except DELETE) that is the full URI of where a resource resides.  Potential improvements for this feature are discussed below.
 
 Overall I would say that my implementation is a level 2/3 on the [Richardson REST Maturity Model](http://martinfowler.com/articles/richardsonMaturityModel.html)
 
@@ -81,29 +81,32 @@ Below I describe and give examples for all available API resources.  By followin
 
 #### Results:
 ```
-HTTP/1.0 200 OK
+HTTP/1.1 200 OK
+Server: openresty/1.9.15.1
+Date: Thu, 25 Aug 2016 11:14:44 GMT
 Content-Type: application/json
-Content-Length: 502
-Server: Werkzeug/0.9.6 Python/2.7.12
-Date: Wed, 24 Aug 2016 22:06:07 GMT
+Content-Length: 509
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Clacks-Overhead: GNU Terry Pratchett
 
 {
   "images": [
     {
-      "resize": false,
-      "results": "",
-      "size": "",
       "title": "Nikes",
+      "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg",
       "uri": "http://10la.pythonanywhere.com/img/api/v1.0/images/1",
-      "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg"
+      "results": "",
+      "resize": false,
+      "size": ""
     },
     {
-      "resize": false,
-      "results": "",
-      "size": "",
       "title": "Altra",
+      "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg",
       "uri": "http://10la.pythonanywhere.com/img/api/v1.0/images/2",
-      "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg"
+      "results": "",
+      "resize": false,
+      "size": ""
     }
   ]
 }
@@ -116,46 +119,52 @@ Date: Wed, 24 Aug 2016 22:06:07 GMT
 #### Results:
 
 ```
-HTTP/1.0 201 CREATED
+HTTP/1.1 201 CREATED
+Server: openresty/1.9.15.1
+Date: Thu, 25 Aug 2016 11:16:34 GMT
 Content-Type: application/json
-Content-Length: 233
-Server: Werkzeug/0.9.6 Python/2.7.12
-Date: Wed, 24 Aug 2016 22:13:57 GMT
+Content-Length: 237
+Connection: keep-alive
+X-Clacks-Overhead: GNU Terry Pratchett
 
 {
   "image": {
-    "resize": false,
-    "results": "",
-    "size": "",
     "title": "",
+    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg",
     "uri": "http://10la.pythonanywhere.com/img/api/v1.0/images/3",
-    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"
+    "results": "",
+    "resize": false,
+    "size": ""
   }
+}
 ```
 
 #### GET [hostname]/img/api/v1.0/imgs/[img_id]
 
-<pre class="embedcurl">curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/image/3</pre>
+<pre class="embedcurl">curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
 
 
 #### Results:
 
 ```
-HTTP/1.0 200 OK
+HTTP/1.1 200 OK
+Server: openresty/1.9.15.1
+Date: Thu, 25 Aug 2016 11:18:26 GMT
 Content-Type: application/json
-Content-Length: 186
-Server: Werkzeug/0.9.6 Python/2.7.12
-Date: Wed, 24 Aug 2016 22:19:02 GMT
+Content-Length: 181
+Connection: keep-alive
+X-Clacks-Overhead: GNU Terry Pratchett
 
 {
   "img": {
+    "title": "",
+    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg",
+    "results": "",
     "id": 3,
     "resize": false,
-    "results": "",
-    "size": "",
-    "title": "",
-    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"
+    "size": ""
   }
+}
 ```
 
 
@@ -163,6 +172,7 @@ Date: Wed, 24 Aug 2016 22:19:02 GMT
             |
 #### PUT [hostname]/img/api/v1.0/imgs/[img_id]
 
+<!-- ###todo fix this command and results -->
 <pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
 
 #### Results:
@@ -192,15 +202,17 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
 #### Results:
 
 ```
-	HTTP/1.0 200 OK
-	Content-Type: application/json
-	Content-Length: 20
-	Server: Werkzeug/0.9.6 Python/2.7.12
-	Date: Wed, 24 Aug 2016 23:13:36 GMT
+HTTP/1.1 200 OK
+Server: openresty/1.9.15.1
+Date: Thu, 25 Aug 2016 11:22:52 GMT
+Content-Type: application/json
+Content-Length: 20
+Connection: keep-alive
+X-Clacks-Overhead: GNU Terry Pratchett
 
-	{
-	  "result": true
-	}
+{
+  "result": true
+}
 ```
 
 #### Endpoint 2. Image Inference
@@ -213,33 +225,36 @@ The image inference endpoint supplies a resource for interacting with the Tensor
 
 #### PUT [hostname]/img/api/v1.0/inference/[img_id]
 
-<pre class="embedcurl">curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://10la.pythonanywhere.com/img/api/v1.0/inference/2</pre>
+<pre class="embedcurl">curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":1}' http://10la.pythonanywhere.com/img/api/v1.0/inference/1</pre>
 
 ##### Results:
 ```
-	HTTP/1.0 200 OK
-	Content-Type: application/json
-	Content-Length: 415
-	Server: Werkzeug/0.9.6 Python/2.7.12
-	Date: Wed, 24 Aug 2016 22:47:30 GMT
+HTTP/1.1 200 OK
+Server: openresty/1.9.15.1
+Date: Thu, 25 Aug 2016 11:24:20 GMT
+Content-Type: application/json
+Content-Length: 458
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Clacks-Overhead: GNU Terry Pratchett
 
-	{
-	  "img": {
-	    "id": 2,
-	    "resize": false,
-	    "results": {
-	      "results_name_1": "neither",
-	      "results_name_2": "altra",
-	      "results_name_3": "nike",
-	      "results_score_1": "\"0.7680\"",
-	      "results_score_2": "\"0.2004\"",
-	      "results_score_3": "\"0.0316\""
-	    },
-	    "size": "",
-	    "title": "Altra",
-	    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg"
-	  }
-	}
+{
+  "img": {
+    "title": "Nikes",
+    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg",
+    "uri": "http://10la.pythonanywhere.com/img/api/v1.0/images/1",
+    "results": {
+      "results_name_3": "altra",
+      "results_name_2": "neither",
+      "results_name_1": "nike",
+      "results_score_3": "\"0.0008\"",
+      "results_score_2": "\"0.2078\"",
+      "results_score_1": "\"0.7914\""
+    },
+    "resize": false,
+    "size": ""
+  }
+}C
 ```
 
 #### Endpoint 3. Image Resize
@@ -252,29 +267,39 @@ The third endpoint begins the implementation of resizing images.  Because I will
 
 #### PUT [hostname]/img/api/v1.0/resize/[img_id]
 
-<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://10la.pythonanywhere.com/img/api/v1.0/resize/3</pre>
+<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://10la.pythonanywhere.com/img/api/v1.0/resize/2</pre>
 
 #### Results:
 ```
-	HTTP/1.0 200 OK
-	Content-Type: application/json
-	Content-Length: 235
-	Server: Werkzeug/0.9.6 Python/2.7.12
-	Date: Wed, 24 Aug 2016 23:18:53 GMT
+HTTP/1.1 200 OK
+Server: openresty/1.9.15.1
+Date: Thu, 25 Aug 2016 11:25:27 GMT
+Content-Type: application/json
+Content-Length: 504
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Clacks-Overhead: GNU Terry Pratchett
 
-	{
-	  "img": {
-	    "id": 2,
-	    "resize": false,
-	    "results": "",
-	    "size": {
-	      "height": 480,
-	      "width": 480
-	    },
-	    "title": "Altra",
-	    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg"
-	  }
-	}
+{
+  "img": {
+    "title": "Altra",
+    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg",
+    "uri": "http://10la.pythonanywhere.com/img/api/v1.0/images/2",
+    "results": {
+      "results_name_3": "nike",
+      "results_name_2": "altra",
+      "results_name_1": "neither",
+      "results_score_3": "\"0.0316\"",
+      "results_score_2": "\"0.2004\"",
+      "results_score_1": "\"0.7680\""
+    },
+    "resize": false,
+    "size": {
+      "width": 480,
+      "height": 480
+    }
+  }
+}
 ```
 
 #### Unit Tests
@@ -293,6 +318,7 @@ Below is sample output from running the unit tests from the file `test_app.py`. 
 - better type checking for images
 - better authentication beyond HTTP Basic
 - [HTTPS for every request](http://flask.pocoo.org/snippets/111/)
+- Add a database
 - Better [HATEOAS compliance](http://flask-restful-cn.readthedocs.io/en/0.3.5/)
 - [Improved caching](http://werkzeug.pocoo.org/docs/0.11/wrappers/#werkzeug.wrappers.ETagResponseMixin.make_conditional) via etags.
 - add pagination
@@ -303,3 +329,8 @@ Below is sample output from running the unit tests from the file `test_app.py`. 
 ### References
 - [Best Practices for a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
 - [Is Your REST API RESTful? - PyCon 2015](https://www.youtube.com/watch?v=pZYRC8IbCwk)
+- [Designing a RESTful API with Python and Flask](http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
+-[The Flask Mega-Tutorial](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+-[What Exactly is REST Programming?](http://stackoverflow.com/questions/671118/what-exactly-is-restful-programming)
+-[How to design a REST API](http://blog.octo.com/en/design-a-rest-api/)
+-[REST API Design Guidelines](https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/atlassian-rest-api-design-guidelines-version-1)
