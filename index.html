@@ -456,6 +456,22 @@ X-Clacks-Overhead: GNU Terry Pratchett
 <h4>
 <a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unit Tests</h4>
 
+<p>The unit tests in <code>test_app.py</code> run a number of different tests against the API. </p>
+
+<p>They test:</p>
+
+<ol>
+<li>A root address exists and responds appropriately</li>
+<li>A nonexistent URL returns a 404 error</li>
+<li>Individual images have their own URI that responds correctly</li>
+<li>Bad image URLs return a 404 error</li>
+<li>Creating a new image functions and returns the appropriate response</li>
+<li>JSON is used throughout the requests and responses</li>
+<li>Authentication is used correctly on all requests</li>
+<li>The inference resource works on an image and returns the correct response</li>
+<li>The resize resource functions correctly and returns the correct response</li>
+<li>Deleting an image functions and returns the correct response</li>
+
 <p>Below is sample output from running the unit tests from the file <code>test_app.py</code>.  Note that there is a deprecation warning from TensorFlow <a href="https://github.com/tensorflow/tensorflow/issues/1528">that is expected</a>.</p>
 
 <pre><code>    $ python test_app.py
