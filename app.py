@@ -66,7 +66,7 @@ def get_images():
 #                             user=user,
 #                             images=images)
 def index():
-    return "Hello, World!  This isn't very intersting, maybe you should try connecting to http://10la.pythonanywhere.com/img/api/v1.0/images/"
+    return "Hello, World!  This isn't very interesting, maybe you should try connecting to http://10la.pythonanywhere.com/img/api/v1.0/images/"
 
 ### test String
 ### curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/images/2

@@ -1,3 +1,8 @@
+### Note this PDF was generated from a website available at (http://bit.ly/RESTfulAPI_ck)
+
+********
+
+Go there for all the live linked goodness.
 
 ### Purpose
 
