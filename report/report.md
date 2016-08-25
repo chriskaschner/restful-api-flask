@@ -67,6 +67,9 @@ Overall I would say that my implementation is a level 2/3 on the [Richardson RES
 Below I describe and give examples for all available API resources.  By following along and executing the embedded curl commands in order one can effectively test the API.
 
 ### Endpoint 1. Images File Store
+
+The first endpoint provides a means to store and retrieve information that relates to images.  It handles all of the portions of our API related to creating, updating, retrieving and deleting individual image records as well as lists of images.
+
 |  HTTP Method |                           URI                  |             Action           |
 |--------------|------------------------------------------------|------------------------------|
 |     GET      |        [hostname]/img/api/v1.0/imgs            | Retrieve list of images      |  
@@ -75,6 +78,25 @@ Below I describe and give examples for all available API resources.  By followin
 |     PUT      |        [hostname]/img/api/v1.0/imgs/[img_id]   | Update an existing image     |
 |     DELETE   |        [hostname]/img/api/v1.0/imgs/[img_id]   | Delete an existing image     |
 
+Each image record will have a number of different fields of JSON data:
+- `id` and `uri`: Unique identifier for images.  Although id integers are returned as a full URI that controls the image.  This means a client does not need to construct a URI from information it receives from the API but rather receives a usable full path.  An example- `'id'=1` and `'uri'= "http://10la.pythonanywhere.com/img/api/v1.0/images/1"`.
+- `title` : A short description of the image.
+- `url`: A location of the image as stored on AWS S3, such as `http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg`
+- `results`: The probabilities and labels for each potential class an image can belong to.  The below sample shows that there is a 79% confidence that the image in question is a Nike.
+
+	```
+	"results": {
+		"results_name_1": "nike",
+		"results_score_1": "\"0.7914\""
+	}
+```
+- `resize`: Boolean used for determining if the image size has been processed.
+- `size` : Height and width in pixels of an image as returned from the `resize` resource.
+
+id: unique identifier for tasks. Numeric type.
+title: short task description. String type.
+description: long task description. Text type.
+done: task completion state. Boolean type.
 
 #### GET [hostname]/img/api/v1.0/imgs
 <pre class="embedcurl">curl -i http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
@@ -173,26 +195,29 @@ X-Clacks-Overhead: GNU Terry Pratchett
 #### PUT [hostname]/img/api/v1.0/imgs/[img_id]
 
 <!-- ###todo fix this command and results -->
-<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
+<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://10la.pythonanywhere.com/img/api/v1.0/images/2</pre>
 
 #### Results:
 
 ```
-HTTP/1.0 200 OK
+HTTP/1.1 200 OK
+Server: openresty/1.9.15.1
+Date: Thu, 25 Aug 2016 11:58:11 GMT
 Content-Type: application/json
-Content-Length: 195
-Server: Werkzeug/0.9.6 Python/2.7.12
-Date: Wed, 24 Aug 2016 22:43:20 GMT
+Content-Length: 181
+Connection: keep-alive
+X-Clacks-Overhead: GNU Terry Pratchett
 
 {
   "img": {
-    "id": 3,
-    "resize": false,
-    "results": "",
-    "size": "",
     "title": "C-ron-ron",
-    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"
+    "url": "https://s3-us-west-2.amazonaws.com/imgdirect/altra.jpg",
+    "results": "",
+    "id": 2,
+    "resize": false,
+    "size": ""
   }
+}
 ```
 
 #### DELETE [hostname]/img/api/v1.0/imgs/[img_id]
@@ -315,22 +340,22 @@ Below is sample output from running the unit tests from the file `test_app.py`. 
 	OK
 ```
 #### Improvements
-- better type checking for images
-- better authentication beyond HTTP Basic
+- Better authentication beyond HTTP Basic
 - [HTTPS for every request](http://flask.pocoo.org/snippets/111/)
 - Add a database
 - Better [HATEOAS compliance](http://flask-restful-cn.readthedocs.io/en/0.3.5/)
 - [Improved caching](http://werkzeug.pocoo.org/docs/0.11/wrappers/#werkzeug.wrappers.ETagResponseMixin.make_conditional) via etags.
-- add pagination
-- add rate limiting
-- add direct upload to AWS S3 with [IAM roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-api.html)
+- Better type checking for images
+- Add pagination
+- Add rate limiting
+- Add direct upload to AWS S3 with [IAM roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-api.html)
 
 
 ### References
 - [Best Practices for a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
 - [Is Your REST API RESTful? - PyCon 2015](https://www.youtube.com/watch?v=pZYRC8IbCwk)
 - [Designing a RESTful API with Python and Flask](http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
--[The Flask Mega-Tutorial](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
--[What Exactly is REST Programming?](http://stackoverflow.com/questions/671118/what-exactly-is-restful-programming)
--[How to design a REST API](http://blog.octo.com/en/design-a-rest-api/)
--[REST API Design Guidelines](https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/atlassian-rest-api-design-guidelines-version-1)
+- [The Flask Mega-Tutorial](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+- [What Exactly is REST Programming?](http://stackoverflow.com/questions/671118/what-exactly-is-restful-programming)
+- [How to design a REST API](http://blog.octo.com/en/design-a-rest-api/)
+- [REST API Design Guidelines](https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/atlassian-rest-api-design-guidelines-version-1)
