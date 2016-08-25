@@ -35,7 +35,7 @@
 
 <p>For this project I wanted to build a REST API that allowed me to send requests to that neural network and store its results in JSON.</p>
 
-<p>Fortunately, I also had the opportunity to develop a solution for a GapJumpers Challenge <a href="https://www.gapjumpers.me/questions/return-path/qs-323/">available here</a></p>
+<p>Fortunately, I also had the opportunity to develop a solution for the GapJumpers Challenge <a href="https://www.gapjumpers.me/questions/return-path/qs-323/">available here</a>.</p>
 
 <p>The challenge specifies the following for a successful submission:</p>
 
@@ -50,7 +50,7 @@
 </li>
 <li>Pay careful attention to REST best practices</li>
 <li>Describe the application in detail in a design document including why you chose the approach you did.</li>
-<li>include tests that validate success.</li>
+<li>Include tests that validate success.</li>
 </ul>
 
 <h3>
@@ -58,23 +58,23 @@
 
 <ul>
 <li>Using Python and Flask, I created this website- <a href="https://chriskaschner.github.io/restful-api-flask/">a single page</a> that allows for retrieval of data from my endpoints.  The 3 endpoints are described in detail in the API Documentation section below.</li>
-<li>In order to share my application and provide links where it can be tested - links and curl embeds are included throughout this document that allow for interacting with the API directly.  The API is currently live at <a href="http://10la.pythonanywhere.com/img/api/v1.0/images">http://10la.pythonanywhere.com/img/api/v1.0/images</a> and all references to a [hostname] in this documentation refers to <code>http://10la.pythonanywhere.com</code>.  The <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/app.py">application</a>, it's <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py">unit tests</a>, and all supporting documentation can be found at the <a href="https://github.com/chriskaschner/restful-api-flask">project's GitHub</a>.<br>
+<li>In order to share my application and provide links where it can be tested, links and curl embeds are included throughout this document that allow for interacting with the API directly.  The API is currently live at <a href="http://10la.pythonanywhere.com/img/api/v1.0/images">http://10la.pythonanywhere.com/img/api/v1.0/images</a> and all references to a [hostname] in this documentation refers to <code>http://10la.pythonanywhere.com</code>.  The <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/app.py">application</a>, it's <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py">unit tests</a>, and all supporting documentation can be found at the <a href="https://github.com/chriskaschner/restful-api-flask">project's GitHub</a>.<br>
 </li>
 <li>This webpage represents the design document.  In particular the sections dedicated to the REST Architecture and API Documentation discuss the design process in detail.</li>
-<li>Unit tests, including those that validate success, are available in a number of ways.  Basic functionality can be verified by executing each curl command in order it appears in the the API Documentation section.  A copy of the output of the unit test application is included in the Unit Tests section.  Finally, the <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py">test application</a> can be downloaded from GitHub and run locally.</li>
+<li>Unit tests, including those that validate success, are available in a number of ways.  Basic functionality can be verified by executing each curl command in the order it appears in the the API Documentation section.  A copy of the output of the unit test application is included in the Unit Tests section below.  Finally, the <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py">test application</a> can be downloaded from GitHub and run locally.</li>
 </ul>
 
 <h3>
 <a id="rest-architecture" class="anchor" href="#rest-architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>REST Architecture</h3>
 
-<p>Representational state transfer (REST) originally specified in the <a href="http://www.ics.uci.edu/%7Efielding/pubs/dissertation/rest_arch_style.htm">5th chapter</a> of Roy Fielding's PhD thesis "Architectural Styles and
+<p>Representational state transfer (REST) was originally specified in the <a href="http://www.ics.uci.edu/%7Efielding/pubs/dissertation/rest_arch_style.htm">5th chapter</a> of Roy Fielding's PhD thesis "Architectural Styles and
 the Design of Network-based Software Architectures" which specifies 6 constraints for the REST architecture.</p>
 
 <ol>
-<li>Client-Server - API is separated from a client.  Although this could represent different processes within a single computer.  The objective is to allow for scalability- mulitple clients and multiple types of clients can thus connect with a single API.</li>
+<li>Client-Server - API is separated from a client, although this could represent different processes within a single computer.  The objective is to allow for scalability- mulitple clients and multiple types of clients can thus connect with a single API.</li>
 <li>Stateless - <a href="http://programmers.stackexchange.com/questions/141019/should-cookies-be-used-in-a-restful-api">No</a> <a href="http://stackoverflow.com/questions/319530/restful-authentication">cookies</a> and no sessions.  Clients must authenticate upon every request.</li>
 <li>Cache - Server should provide caching directives so that in the event that a similar request arrives multiple times, a response can be provided without requiring a repeated request to the server.  There are a variety of caches, including inside of the browser.</li>
-<li>Layered System - Both the client and the API may or may not be communicating directly with the other.  Likely there's a layer in between (such as a load balancer).  This prevents a server from identifying requests by the client, in the case of a load-balancer, a server may receive <em>ALL</em> of its requests from a single client.  The benefit of this is that in the event that a load balancer is placed in between the server and the client, you now have the ability to scale to a huge number of clients and servers without requiring fundamental changes.</li>
+<li>Layered System - Both the client and the API may or may not be communicating directly with each the other.  Likely there's a layer in between (such as a load balancer).  This prevents a server from identifying requests by the client.  In the case of a load-balancer, a server may receive <em>ALL</em> of its requests from a single client.  The benefit of this is that in the event that a load balancer is placed in between the server and the client, you now have the ability to scale to a huge number of clients and servers without requiring fundamental changes.</li>
 <li>Code-On-Demand - In practice this is an optional REST principle.  Clients can receive executable code to run as a response to a request.  How would an API know what types of code that a client could run?</li>
 <li>
 <p>Uniform Interface -</p>
@@ -94,7 +94,7 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 <a id="my-projects-interpretation-of-rest-constraints" class="anchor" href="#my-projects-interpretation-of-rest-constraints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>My project's interpretation of REST constraints</h3>
 
 <ol>
-<li>Client-Server - Yes, the API is hosted on a server both physically and logically separated from the clients I'm using to consume it.</li>
+<li>Client-Server - Yes, the API is hosted on a server both physically and logically separated from the clients.</li>
 <li>Stateless - Yes, outside of the root URI for the API clients must authenticate upon every request.  Although as listed in the improvements section, adding rate limiting would potentially remove this constraint.  In a stateless system how would you identify an un-authenticated user in order to limit their number of requests?</li>
 <li>Cache - Yes, this is being met when the API is consumed in a browser.  However, as discussed in the improvements section, adding etags would improve the existing solution.</li>
 <li>Layered System - Yes, Similar to Client-Server above, all requests are authenticated separately, and there are no systems in place that would attempt to identify a client merely by its requests.  I use HTTP Basic Auth and discuss some ways this could be improved in the improvements section.</li>
@@ -120,7 +120,7 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 </li>
 </ol>
 
-<p>Overall I would say that my implementation is a level 2/3 on the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richardson REST Maturity Model</a></p>
+<p>Overall I would say that my implementation is a level 2/3 on the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richardson REST Maturity Model</a>.</p>
 
 <h3>
 <a id="api-documentation" class="anchor" href="#api-documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API Documentation</h3>
