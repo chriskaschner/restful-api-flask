@@ -2,7 +2,7 @@ import pytest
 import os
 import tempfile
 ###todo fix this to import from different folder location
-import original_app
+import app
 import unittest
 import json
 import requests
@@ -16,13 +16,10 @@ headers = {
 
 class AppTestCase(unittest.TestCase):
     def setUp(self):
-        # self.db_fd, zoriginal_app.app.config['DATABASE'] = tempfile.mkstemp()
-        original_app.app.config['TESTING'] = True
-        self.app = original_app.app.test_client()
+        app.app.config['TESTING'] = True
+        self.app = app.app.test_client()
 
     def tearDown(self):
-        # os.close(self.db_fd)
-        # os.unlink(zoriginal_app.app.config['DATABASE'])
         pass
 
     def test_correct_response_code(self):

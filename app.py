@@ -147,9 +147,7 @@ def delete_image(img_id):
     return jsonify({'result': True})
 
 ### test string
-### curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/resize/2
-### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
-### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/img/api/v1.0/resize/3
+### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/img/api/v1.0/resize/2
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://10la.pythonanywhere.com/img/api/v1.0/resize/2
 @app.route('/img/api/v1.0/resize/<int:img_id>', methods=['PUT'])
 @auth.login_required
@@ -171,18 +169,13 @@ def get_image_dims(imgURL):
         }
     return size
 
-# def resize_image(imgURL):
-#     pass
-     ## if bigger than desired size
-     ## resize image to smaller size
-     ## else set resized to True and move on
 
 ### Model and Labels files for TensorFlow
-modelFullPath = './output_graph.pb'
-labelsFullPath = './output_labels.txt'
+modelFullPath = './static/output_graph.pb'
+labelsFullPath = './static/output_labels.txt'
 # ### pythonanywhere handles paths differently, uncomment in production
-# modelFullPath = '/home/10la/restful-api-flask/output_graph.pb'
-# labelsFullPath = '/home/10la/restful-api-flask/output_labels.txt'
+# modelFullPath = '/home/10la/restful-api-flask/static/output_graph.pb'
+# labelsFullPath = '/home/10la/restful-api-flask/static/output_labels.txt'
 
 def create_graph():
     """Creates a graph from saved GraphDef file and returns a saver."""
