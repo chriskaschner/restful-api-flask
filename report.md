@@ -27,6 +27,11 @@ REST defines an architectural style used in web development.  Because it defined
 
 ## What I built
 
+Can you teach a computer to recognize  the brand logos of Nike and Altra in an unlabeled feed of images from Instagram?
+
+In a [previous project](chriskaschner.com/retraining), I created a Convolutional Neural Network (CNN) that can identify brand logos in untagged/ unlabeled photos from a social media feed.  The model I used implemented a [previously trained](https://github.com/tensorflow/models/tree/master/inception) network and [transfer learning](https://en.wikipedia.org/wiki/Inductive_transfer).
+
+For this project I wanted to build a REST API that allowed me to send requests to that neural network and store its results in JSON.
 
 ###### How my project meets REST constraints
 
@@ -123,6 +128,7 @@ Date: Wed, 24 Aug 2016 22:06:07 GMT
 ```
 
 #### POST [hostname]/img/api/v1.0/imgs
+
 <pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X POST -d '{"url":"http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"}' http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
 
 ##### Results:
