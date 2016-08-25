@@ -55,12 +55,12 @@ def make_public_img(image):
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-@app.route('/markdown')
-def get_markdown():
-    with open('markdown.txt', 'r') as markdown_file:
-        content=markdown_file.read()
-    content = Markup(markdown.markdown(content))
-    return render_template('markdown.html', **locals())
+# @app.route('/markdown')
+# def get_markdown():
+#     with open('markdown.txt', 'r') as markdown_file:
+#         content=markdown_file.read()
+#     content = Markup(markdown.markdown(content))
+#     return render_template('markdown.html', **locals())
 
 
 ### test string
@@ -69,14 +69,14 @@ def get_markdown():
 def get_images():
     return jsonify({'images': [make_public_img(image) for image in images]})
 
-@app.route('/')
-@app.route('/index')
-def index():
-    user = {'nickname': 'ReturnPath'} # fake user
-    return render_template('index.html',
-                            title='Home',
-                            user=user,
-                            images=images)
+# @app.route('/')
+# @app.route('/index')
+# def index():
+#     user = {'nickname': 'ReturnPath'} # fake user
+#     return render_template('index.html',
+#                             title='Home',
+#                             user=user,
+#                             images=images)
 
 ### test String
 ### curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/images/2
