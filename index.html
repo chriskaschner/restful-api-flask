@@ -1,29 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Making a RESTful API using Python and Flask by chriskaschner</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <script src="https://www.embedcurl.com/embedcurl.min.js" async></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Making a RESTful API using Python and Flask : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Making a RESTful API using Python and Flask</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">Making a RESTful API using Python and Flask</h1>
-      </header>
-      <ul>
-  <li class="download"><a class="buttons" href="https://github.com/chriskaschner/restful-api-flask/zipball/master">Download ZIP</a></li>
-  <li><a class="buttons github" href="https://github.com/chriskaschner/restful-api-flask">View Project on GitHub</a></li>
-    </ul>
-      <section>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/chriskaschner/restful-api-flask">View on GitHub</a>
+
+          <h1 id="project_title">Making a RESTful API using Python and Flask</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/chriskaschner/restful-api-flask/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/chriskaschner/restful-api-flask/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h3>
 <a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h3>
 
@@ -168,12 +175,12 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 <h4>
 <a id="get-hostnameimgapiv10imgs" class="anchor" href="#get-hostnameimgapiv10imgs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GET [hostname]/img/api/v1.0/imgs</h4>
 
-<pre class="embedcurl">curl -i http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
+<pre>curl -i http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
 
 <h4>
 <a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
-<code>HTTP/1.1 200 OK
+<pre><code>HTTP/1.1 200 OK
 Server: openresty/1.9.15.1
 Date: Thu, 25 Aug 2016 11:14:44 GMT
 Content-Type: application/json
@@ -202,17 +209,17 @@ X-Clacks-Overhead: GNU Terry Pratchett
     }
   ]
 }
-</code>
+</code></pre>
 
 <h4>
 <a id="post-hostnameimgapiv10imgs" class="anchor" href="#post-hostnameimgapiv10imgs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>POST [hostname]/img/api/v1.0/imgs</h4>
 
-<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X POST -d '{"url":"http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"}' http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
+<pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X POST -d '{"url":"http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"}' http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
 
 <h4>
 <a id="results-1" class="anchor" href="#results-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
-<code>HTTP/1.1 201 CREATED
+<pre><code>HTTP/1.1 201 CREATED
 Server: openresty/1.9.15.1
 Date: Thu, 25 Aug 2016 11:16:34 GMT
 Content-Type: application/json
@@ -230,17 +237,17 @@ X-Clacks-Overhead: GNU Terry Pratchett
     "size": ""
   }
 }
-</code>
+</code></pre>
 
 <h4>
 <a id="get-hostnameimgapiv10imgsimg_id" class="anchor" href="#get-hostnameimgapiv10imgsimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GET [hostname]/img/api/v1.0/imgs/[img_id]</h4>
 
-<pre class="embedcurl">curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
+<pre>curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
 
 <h4>
 <a id="results-2" class="anchor" href="#results-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
-<code>HTTP/1.1 200 OK
+<pre><code>HTTP/1.1 200 OK
 Server: openresty/1.9.15.1
 Date: Thu, 25 Aug 2016 11:18:26 GMT
 Content-Type: application/json
@@ -258,22 +265,22 @@ X-Clacks-Overhead: GNU Terry Pratchett
     "size": ""
   }
 }
-</code>
+</code></pre>
 
-<code>        |
-</code>
+<pre><code>        |
+</code></pre>
 
 <h4>
 <a id="put-hostnameimgapiv10imgsimg_id" class="anchor" href="#put-hostnameimgapiv10imgsimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PUT [hostname]/img/api/v1.0/imgs/[img_id]</h4>
 
 
 
-<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://10la.pythonanywhere.com/img/api/v1.0/images/2</pre>
+<pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://10la.pythonanywhere.com/img/api/v1.0/images/2</pre>
 
 <h4>
 <a id="results-3" class="anchor" href="#results-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
-<code>HTTP/1.1 200 OK
+<pre><code>HTTP/1.1 200 OK
 Server: openresty/1.9.15.1
 Date: Thu, 25 Aug 2016 11:58:11 GMT
 Content-Type: application/json
@@ -291,17 +298,17 @@ X-Clacks-Overhead: GNU Terry Pratchett
     "size": ""
   }
 }
-</code>
+</code></pre>
 
 <h4>
 <a id="delete-hostnameimgapiv10imgsimg_id" class="anchor" href="#delete-hostnameimgapiv10imgsimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DELETE [hostname]/img/api/v1.0/imgs/[img_id]</h4>
 
-<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X DELETE http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
+<pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X DELETE http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
 
 <h4>
 <a id="results-4" class="anchor" href="#results-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
-<code>HTTP/1.1 200 OK
+<pre><code>HTTP/1.1 200 OK
 Server: openresty/1.9.15.1
 Date: Thu, 25 Aug 2016 11:22:52 GMT
 Content-Type: application/json
@@ -312,7 +319,7 @@ X-Clacks-Overhead: GNU Terry Pratchett
 {
   "result": true
 }
-</code>
+</code></pre>
 
 <h4>
 <a id="endpoint-2-image-inference" class="anchor" href="#endpoint-2-image-inference" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Endpoint 2. Image Inference</h4>
@@ -339,12 +346,12 @@ X-Clacks-Overhead: GNU Terry Pratchett
 <h4>
 <a id="put-hostnameimgapiv10inferenceimg_id" class="anchor" href="#put-hostnameimgapiv10inferenceimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PUT [hostname]/img/api/v1.0/inference/[img_id]</h4>
 
-<pre class="embedcurl">curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":1}' http://10la.pythonanywhere.com/img/api/v1.0/inference/1</pre>
+<pre>curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":1}' http://10la.pythonanywhere.com/img/api/v1.0/inference/1</pre>
 
 <h5>
 <a id="results-5" class="anchor" href="#results-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h5>
 
-<code>HTTP/1.1 200 OK
+<pre><code>HTTP/1.1 200 OK
 Server: openresty/1.9.15.1
 Date: Thu, 25 Aug 2016 11:24:20 GMT
 Content-Type: application/json
@@ -370,7 +377,7 @@ X-Clacks-Overhead: GNU Terry Pratchett
     "size": ""
   }
 }C
-</code>
+</code></pre>
 
 <h4>
 <a id="endpoint-3-image-resize" class="anchor" href="#endpoint-3-image-resize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Endpoint 3. Image Resize</h4>
@@ -397,12 +404,12 @@ X-Clacks-Overhead: GNU Terry Pratchett
 <h4>
 <a id="put-hostnameimgapiv10resizeimg_id" class="anchor" href="#put-hostnameimgapiv10resizeimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PUT [hostname]/img/api/v1.0/resize/[img_id]</h4>
 
-<pre class="embedcurl">curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://10la.pythonanywhere.com/img/api/v1.0/resize/2</pre>
+<pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://10la.pythonanywhere.com/img/api/v1.0/resize/2</pre>
 
 <h4>
 <a id="results-6" class="anchor" href="#results-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
-<code>HTTP/1.1 200 OK
+<pre><code>HTTP/1.1 200 OK
 Server: openresty/1.9.15.1
 Date: Thu, 25 Aug 2016 11:25:27 GMT
 Content-Type: application/json
@@ -431,21 +438,21 @@ X-Clacks-Overhead: GNU Terry Pratchett
     }
   }
 }
-</code>
+</code></pre>
 
 <h4>
 <a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unit Tests</h4>
 
 <p>Below is sample output from running the unit tests from the file <code>test_app.py</code>.  Note that there is a deprecation warning from TensorFlow <a href="https://github.com/tensorflow/tensorflow/issues/1528">that is expected</a>.</p>
 
-<code>    $ python test_app.py
+<pre><code>    $ python test_app.py
     ...tensorflow/core/framework/op_def_util.cc:332] Op BatchNormWithGlobalNormalization is deprecated. It will cease to work in GraphDef version 9. Use tf.nn.batch_normalization().
     ...
     ----------------------------------------------------------------------
     Ran 13 tests in 4.186s
 
     OK
-</code>
+</code></pre>
 
 <h4>
 <a id="improvements" class="anchor" href="#improvements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Improvements</h4>
@@ -471,19 +478,24 @@ X-Clacks-Overhead: GNU Terry Pratchett
 <ul>
 <li><a href="http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api">Best Practices for a Pragmatic RESTful API</a></li>
 <li><a href="https://www.youtube.com/watch?v=pZYRC8IbCwk">Is Your REST API RESTful? - PyCon 2015</a></li>
-<li><a href="http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask">Designing a RESTful API with Python and Flask</a>
-<li><a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">The Flask Mega-Tutorial</a>
-<li><a href="http://stackoverflow.com/questions/671118/what-exactly-is-restful-programming">What Exactly is REST Programming?</a>
-<li><a href="http://blog.octo.com/en/design-a-rest-api/">How to design a REST API</a>
-<li><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/atlassian-rest-api-design-guidelines-version-1">REST API Design Guidelines</a>
-</li>
+<li><a href="http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask">Designing a RESTful API with Python and Flask</a></li>
+<li><a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">The Flask Mega-Tutorial</a></li>
+<li><a href="http://stackoverflow.com/questions/671118/what-exactly-is-restful-programming">What Exactly is REST Programming?</a></li>
+<li><a href="http://blog.octo.com/en/design-a-rest-api/">How to design a REST API</a></li>
+<li><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/atlassian-rest-api-design-guidelines-version-1">REST API Design Guidelines</a></li>
 </ul>
       </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Making a RESTful API using Python and Flask maintained by <a href="https://github.com/chriskaschner">chriskaschner</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
 
   </body>
 </html>
