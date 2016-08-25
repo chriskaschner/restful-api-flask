@@ -228,7 +228,7 @@ Date: Wed, 24 Aug 2016 22:13:57 GMT
 <h4>
 <a id="get-hostnameimgapiv10imgsimg_id" class="anchor" href="#get-hostnameimgapiv10imgsimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GET [hostname]/img/api/v1.0/imgs/[img_id]</h4>
 
-<pre class="embedcurl">curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/image/3</pre>
+<pre class="embedcurl">curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/images/2</pre>
 
 <h4>
 <a id="results-2" class="anchor" href="#results-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
@@ -238,15 +238,14 @@ Content-Type: application/json
 Content-Length: 186
 Server: Werkzeug/0.9.6 Python/2.7.12
 Date: Wed, 24 Aug 2016 22:19:02 GMT
-
-{
+  {
   "img": {
-    "id": 3,
-    "resize": false,
-    "results": "",
-    "size": "",
-    "title": "",
-    "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"
+  "title": "Altra",
+  "url": "http://imgdirect.s3-website-us-west-2.amazonaws.com/altra.jpg",
+  "id": 2,
+  "resize": false,
+  "size": ""
+    }
   }
 </code>
 
@@ -442,7 +441,7 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
       </section>
     </div>
     <footer>
-      
+
       <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
     </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
