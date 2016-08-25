@@ -168,7 +168,7 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 </table>
 
 
-<p>Each image record will have a number of different fields of JSON data:
+<p>Each image record has a number of different fields of JSON data:
 <li><code>id</code> and <code>uri</code> : Unique identifier for images. Although id integers are returned as a full URI that controls the image. This means a client does not need to construct a URI from information it receives from the API but rather receives a usable full path. An example- <code>'id'=1</code> and <code>'uri'= &quot;http://10la.pythonanywhere.com/img/api/v1.0/images/1&quot;</code>.
 <li><code>title</code> : A short description of the image.
 <li><code>url</code> : A location of the image as stored on AWS S3, such as <code>http://imgdirect.s3-website-us-west-2.amazonaws.com/nike.jpg</code>
