@@ -3,12 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Restful-api-flask by chriskaschner</title>
+    <title>Making a RESTful API using Python and Flask by chriskaschner</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-dark.css">
     <script src="javascripts/scale.fix.js"></script>
-    <script src="https://www.embedcurl.com/embedcurl.min.js" async></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <!--[if lt IE 9]>
@@ -18,16 +17,56 @@
   <body>
     <div class="wrapper">
       <header class="without-description">
-        <h1>Restful-api-flask</h1>
+        <h1>Making a RESTful API using Python and Flask</h1>
         <p></p>
+        <p class="view"><a href="https://github.com/chriskaschner/restful-api-flask">View the Project on GitHub <small>chriskaschner/restful-api-flask</small></a></p>
+        <ul>
+          <li><a href="https://github.com/chriskaschner/restful-api-flask/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/chriskaschner/restful-api-flask/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/chriskaschner/restful-api-flask">View On <strong>GitHub</strong></a></li>
+        </ul>
       </header>
       <section>
-        
+        <h3>
+<a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h3>
 
-<h2>
-<a id="rest-architecture" class="anchor" href="#rest-architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>REST Architecture</h2>
+<p>Can you teach a computer to recognize the brand logos in an unlabeled feed of images from Instagram?</p>
 
-<pre class="embedcurl">curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/jso" -d '{"id":2}' http://10la.pythonanywhere.com/img/api/v1.0/inference/2</pre>
+<p>In a <a href="chriskaschner.com/retraining">previous project</a>, I created a Convolutional Neural Network (CNN) that can identify brand logos (specifically Nike and Altra) in untagged/ unlabeled photos from a social media feed.  The model I used implemented a <a href="https://github.com/tensorflow/models/tree/master/inception">previously trained</a> network and <a href="https://en.wikipedia.org/wiki/Inductive_transfer">transfer learning</a>.</p>
+
+<p>For this project I wanted to build a REST API that allowed me to send requests to that neural network and store its results in JSON.</p>
+
+<p>Fortunately, I also had the opportunity to develop a solution for a GapJumpers Challenge <a href="https://www.gapjumpers.me/questions/return-path/qs-323/">available here</a></p>
+
+<p>The challenge specifies the following for a successful submission:</p>
+
+<ul>
+<li>Write a simple Rest API with PHP, Node.js, Ruby, Python or Go.</li>
+<li>Your API must have:
+
+<ul>
+<li>at least three endpoints</li>
+<li>all endpoints must be linked in some way</li>
+</ul>
+</li>
+<li>Pay careful attention to REST best practices</li>
+<li>Describe the application in detail in a design document including why you chose the approach you did.</li>
+<li>include tests that validate success.</li>
+</ul>
+
+<h3>
+<a id="deliverables" class="anchor" href="#deliverables" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deliverables</h3>
+
+<ul>
+<li>Using Python and Flask, I created this website- <a href="https://chriskaschner.github.io/restful-api-flask/">a single page</a> that allows for retrieval of data from my endpoints.  The 3 endpoints are described in detail in the <a href="#API%20Documentation">API Documentation</a>.</li>
+<li>In order to share my application and provide links where it can be tested - links and curl embeds are included throughout this document that allow for interacting with the API directly.  The API is currently live at <a href="http://10la.pythonanywhere.com/img/api/v1.0/images">http://10la.pythonanywhere.com/img/api/v1.0/images</a> and all references to a [hostname] in this documentation refers to <code>http://10la.pythonanywhere.com</code>.  The <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/original_app.py">application</a>, it's <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py">unit tests</a>, and all supporting documentation can be found at the <a href="https://github.com/chriskaschner/restful-api-flask">project's GitHub</a>.<br>
+</li>
+<li>This webpage represents the design document.  In particular the sections dedicated to the <a href="#REST%20Architecture">REST Architecture</a> and <a href="#API%20Documentation">API Documentation</a> discuss the design process in detail.</li>
+<li>Unit tests, including those that validate success, are available in a number of ways.  Basic functionality can be verified by executing each curl command in order it appears in the the <a href="#API%20Documentation">API Documentation</a> section.  A copy of the output of the unit test application is included in the <a href="#Unit%20Tests">Unit Tests</a> section.  Finally, the <a href="https://github.com/chriskaschner/restful-api-flask/blob/master/test_app.py">test application</a> can be downloaded from GitHub and run locally.</li>
+</ul>
+
+<h3>
+<a id="rest-architecture" class="anchor" href="#rest-architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>REST Architecture</h3>
 
 <p>Representational state transfer (REST) originally specified in the <a href="http://www.ics.uci.edu/%7Efielding/pubs/dissertation/rest_arch_style.htm">5th chapter</a> of Roy Fielding's PhD thesis "Architectural Styles and
 the Design of Network-based Software Architectures" which specifies 6 constraints for the REST architecture.</p>
@@ -38,7 +77,8 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 <li>Cache - Server should provide caching directives so that in the event that a similar request arrives multiple times, a response can be provided without requiring a repeated request to the server.  There are a variety of caches, including inside of the browser.</li>
 <li>Layered System - Both the client and the API may or may not be communicating directly with the other.  Likely there's a layer in between (such as a load balancer).  This prevents a server from identifying requests by the client, in the case of a load-balancer, a server may receive <em>ALL</em> of its requests from a single client.  The benefit of this is that in the event that a load balancer is placed in between the server and the client, you now have the ability to scale to a huge number of clients and servers without requiring fundamental changes.</li>
 <li>Code-On-Demand - In practice this is an optional REST principle.  Clients can receive executable code to run as a response to a request.  How would an API know what types of code that a client could run?</li>
-<li>Uniform Interface -
+<li>
+<p>Uniform Interface -</p>
 
 <ol>
 <li>Identification of resources - Resources represent every entity in the domain of the application.  Each resource gets its own unique identifier URI such as: <code>/img/api/v1.0/images/3</code>. Collections of resources can also have identifiers such as <code>/img/api/v1.0/images</code>.</li>
@@ -46,35 +86,26 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 <li>Self-Descriptive Message - Clients send and receive HTTP.  Request method defines the operation; target is represented in the URI of the request, headers provide authentication credentials and content types, the representation of the resource is in the body, and the result of an operation is in the response status code.</li>
 <li>HATEOAS <a href="https://en.wikipedia.org/wiki/HATEOAS">Hypermedia As The Engine Of Application State</a> - Clients don't know any resource URIs except for the root of the API and everything else can be discovered through links in resource representations.</li>
 </ol>
+
+<p>Because REST defines an architectural style and is not a specification, there is room for interpretation (or <a href="http://stackoverflow.com/questions/37151257/can-rest-clients-be-not-restful?rq=1">arguments</a> on StackOverflow as the case may be).</p>
 </li>
 </ol>
 
-<p>REST defines an architectural style used in web development.  Because it defined an architecture and not a specification, there is room for interpretation.</p>
-
-<h2>
-<a id="what-i-built" class="anchor" href="#what-i-built" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What I built</h2>
-
-<p>Can you teach a computer to recognize  the brand logos of Nike and Altra in an unlabeled feed of images from Instagram?</p>
-
-<p>In a <a href="chriskaschner.com/retraining">previous project</a>, I created a Convolutional Neural Network (CNN) that identify brand logos in untagged/ unlabeled photos from a social media feed.  The model I used implemented a <a href="https://github.com/tensorflow/models/tree/master/inception">previously trained</a> network and <a href="https://en.wikipedia.org/wiki/Inductive_transfer">transfer learning</a>.</p>
-
-<p>For this project I wanted to build a REST API that allowed me to connect to my previous work building a  </p>
-
-<h6>
-<a id="how-my-project-meets-rest-constraints" class="anchor" href="#how-my-project-meets-rest-constraints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How my project meets REST constraints</h6>
+<h3>
+<a id="my-projects-interpretation-of-rest-constraints" class="anchor" href="#my-projects-interpretation-of-rest-constraints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>My project's interpretation of REST constraints</h3>
 
 <ol>
 <li>Client-Server - Yes, the API is hosted on a server both physically and logically separated from the clients I'm using to consume it.</li>
-<li>Stateless - Yes, outside of the root URI for the API clients must authenticate upon every request.  Although as listed in the below improvements section, adding rate limiting would potentially remove this constraint.  In a statelsss system how would you identify an un-authenticated user in order to limit their number of requests?</li>
-<li>Cache - Yes, this is being met when the API is consumed in a browser.  However, as discussed in the below improvement section, adding etags would improve the existing solution.</li>
-<li>Layered System - Yes, Similar to Client-Server above, all requests are authenticated separately, and there are no systems in place that would attempt to identify a client merely by its requests.</li>
+<li>Stateless - Yes, outside of the root URI for the API clients must authenticate upon every request.  Although as listed in the <a href="#Improvements">improvements section</a>, adding rate limiting would potentially remove this constraint.  In a stateless system how would you identify an un-authenticated user in order to limit their number of requests?</li>
+<li>Cache - Yes, this is being met when the API is consumed in a browser.  However, as discussed in the <a href="#Improvements">improvements section</a>, adding etags would improve the existing solution.</li>
+<li>Layered System - Yes, Similar to Client-Server above, all requests are authenticated separately, and there are no systems in place that would attempt to identify a client merely by its requests.  I use HTTP Basic Auth and discuss some ways this could be improved in the <a href="#Improvements">improvements section</a>.</li>
 <li>Code-On-Demand - No, I do not meet this <a href="https://www.ics.uci.edu/%7Efielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7">optional requirement</a> of REST.  One potential application that I could see this constraint being used for is to download and execute JavaScript in the browser.</li>
 <li>
 <p>Uniform Interface -</p>
 
 <ol>
-<li>Identification of resources - Yes, each resource gets its own unique identifier URI such as: <code>/img/api/v1.0/images/3</code> and each collections of resources has an udentifier <code>/img/api/v1.0/images</code>.</li>
-<li>Resource Representations - Yes, clients can only operate on representations of resources.  In this case, the server only provides JSON content.</li>
+<li>Identification of resources - Yes, each resource gets its own unique identifier URI such as: <code>/img/api/v1.0/images/3</code> and each collections of resources has an udentifier <code>/img/api/v1.0/images</code>.  I also include versioning information in this category.  And while there is some argument about <em>where</em> to place the version information for your API, there is none as to <em>if</em> you should version it.  I place versioning info in the URI.  The other alternative is in the header.</li>
+<li>Resource Representations - Yes, clients can only operate on representations of resources.  In this case, the server only provides JSON content.  I use JSON because it's ubiquitous, human readable, and easy to work with.</li>
 <li>
 <p>Self-Descriptive Message - Yes, the target is represented by the URI of the request, headers provide authentication credentials and content types, the representation of the resource is in the body, and the result of an operation is in the response status code.  Request methods define the operation being performed as follows:</p>
 
@@ -85,57 +116,20 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 <li>DELETE requests delete data</li>
 </ul>
 </li>
-<li><p>HATEOAS <a href="https://en.wikipedia.org/wiki/HATEOAS">Hypermedia As The Engine Of Application State</a> - Yes, Every resource request returns a URI property (except DELETE) that is the full URI of where a resource resides.  Potential improvments for this feature are discussed below.</p></li>
+<li><p>HATEOAS <a href="https://en.wikipedia.org/wiki/HATEOAS">Hypermedia As The Engine Of Application State</a> - Yes, Every resource request returns a URI property (except DELETE) that is the full URI of where a resource resides.  Potential improvements for this feature are <a href="#Improvements">discussed below</a>.</p></li>
 </ol>
 </li>
 </ol>
 
-<h6>
-<a id="versioning" class="anchor" href="#versioning" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Versioning</h6>
-
-<p>There's some argument about <em>where</em> to place the version information for your API, but not <em>if</em> you should version it.  I place versioning info in the URI.  The other alternative is in the header.</p>
-
-<h5>
-<a id="authentication" class="anchor" href="#authentication" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authentication</h5>
-
-<p>I use HTTP Basic Auth</p>
-
-<h6>
-<a id="json" class="anchor" href="#json" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JSON</h6>
-
-<p>It's ubiquitous.  It's human readable.  It's easy to work with.</p>
+<p>Overall I would say that my implementation is a level 2/3 on the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richardson REST Maturity Model</a></p>
 
 <h3>
-<a id="references" class="anchor" href="#references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h3>
+<a id="api-documentation" class="anchor" href="#api-documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API Documentation</h3>
 
-<p><a href="http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api">http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api</a>
-<a href="https://www.youtube.com/watch?v=pZYRC8IbCwk">Miguel Grinberg - Is Your REST API RESTful? - PyCon 2015</a></p>
-
-<h3>
-<a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unit Tests</h3>
-
-<ul>
-<li>Unit tests are included in the file <code>test_app.py</code>
-</li>
-<li> Also, include tests that validate success.</li>
-</ul>
-
-<p>Below is sample output from running the unit tests.  Note that there is a deprecation warning from TensorFlow that is expected.</p>
-
-<pre><code>    $ python test_app.py
-    ..........W tensorflow/core/framework/op_def_util.cc:332] Op BatchNormWithGlobalNormalization is deprecated. It will cease to work in GraphDef version 9. Use tf.nn.batch_normalization().
-    ...
-    ----------------------------------------------------------------------
-    Ran 13 tests in 4.186s
-
-    OK
-</code></pre>
-
-<h2>
-<a id="3-endpoints" class="anchor" href="#3-endpoints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3 endpoints</h2>
+<p>Below I describe and give examples for all available API resources.  By following along and executing the embedded curl commands in order one can effectively test the API.</p>
 
 <h3>
-<a id="1-images-file-store" class="anchor" href="#1-images-file-store" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. Images File Store</h3>
+<a id="endpoint-1-images-file-store" class="anchor" href="#endpoint-1-images-file-store" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Endpoint 1. Images File Store</h3>
 
 <table>
 <thead>
@@ -179,8 +173,8 @@ the Design of Network-based Software Architectures" which specifies 6 constraint
 
 <pre>curl -i http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
 
-<h5>
-<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h5>
+<h4>
+<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
 <pre><code>HTTP/1.0 200 OK
 Content-Type: application/json
@@ -215,8 +209,8 @@ Date: Wed, 24 Aug 2016 22:06:07 GMT
 
 <pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X POST -d '{"url":"http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"}' http://10la.pythonanywhere.com/img/api/v1.0/images</pre>
 
-<h5>
-<a id="results-1" class="anchor" href="#results-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h5>
+<h4>
+<a id="results-1" class="anchor" href="#results-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
 <pre><code>HTTP/1.0 201 CREATED
 Content-Type: application/json
@@ -240,8 +234,8 @@ Date: Wed, 24 Aug 2016 22:13:57 GMT
 
 <pre>curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/image/3</pre>
 
-<h5>
-<a id="results-2" class="anchor" href="#results-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h5>
+<h4>
+<a id="results-2" class="anchor" href="#results-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
 <pre><code>HTTP/1.0 200 OK
 Content-Type: application/json
@@ -268,8 +262,8 @@ Date: Wed, 24 Aug 2016 22:19:02 GMT
 
 <pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
 
-<h5>
-<a id="results-3" class="anchor" href="#results-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h5>
+<h4>
+<a id="results-3" class="anchor" href="#results-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
 <pre><code>HTTP/1.0 200 OK
 Content-Type: application/json
@@ -293,8 +287,8 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
 
 <pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X DELETE http://10la.pythonanywhere.com/img/api/v1.0/images/3</pre>
 
-<h5>
-<a id="results-4" class="anchor" href="#results-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h5>
+<h4>
+<a id="results-4" class="anchor" href="#results-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
 <pre><code>    HTTP/1.0 200 OK
     Content-Type: application/json
@@ -307,11 +301,30 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
     }
 </code></pre>
 
-<h2>
-<a id="2-image-inference" class="anchor" href="#2-image-inference" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. Image Inference</h2>
+<h4>
+<a id="endpoint-2-image-inference" class="anchor" href="#endpoint-2-image-inference" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Endpoint 2. Image Inference</h4>
+
+<p>The image inference endpoint supplies a resource for interacting with the TensorFlow model I use for determining whether a given image contains and brands of interest.  Results are returned as a probability for each of 3 possible outcomes- Altra, Nike, or Neither and are appended to the JSON associated with a given image along with the name for each outcome.</p>
+
+<table>
+<thead>
+<tr>
+<th>HTTP Method</th>
+<th>URI</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT</td>
+<td>[hostname]/img/api/v1.0/inference/[img_id]</td>
+<td>Measure image dimensions and add height and width to field <code>"size"</code> in JSON</td>
+</tr>
+</tbody>
+</table>
 
 <h4>
-<a id="put-hostnameimgapiv10resizeimg_id" class="anchor" href="#put-hostnameimgapiv10resizeimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PUT [hostname]/img/api/v1.0/resize/[img_id]</h4>
+<a id="put-hostnameimgapiv10inferenceimg_id" class="anchor" href="#put-hostnameimgapiv10inferenceimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PUT [hostname]/img/api/v1.0/inference/[img_id]</h4>
 
 <pre>curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://10la.pythonanywhere.com/img/api/v1.0/inference/2</pre>
 
@@ -343,13 +356,35 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
     }
 </code></pre>
 
-<h2>
-<a id="3-image-resize" class="anchor" href="#3-image-resize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Image Resize</h2>
+<h4>
+<a id="endpoint-3-image-resize" class="anchor" href="#endpoint-3-image-resize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Endpoint 3. Image Resize</h4>
+
+<p>The third endpoint begins the implementation of resizing images.  Because I will eventually extend this API out to be able to ingest a photo, resize it, then upload it to AWS S3, this endpoint lays the groundwork for that function.</p>
+
+<table>
+<thead>
+<tr>
+<th>HTTP Method</th>
+<th>URI</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT</td>
+<td>[hostname]/img/api/v1.0/resize/[img_id]</td>
+<td>Measure image dimensions and add height and width to field <code>"size"</code> in JSON</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="put-hostnameimgapiv10resizeimg_id" class="anchor" href="#put-hostnameimgapiv10resizeimg_id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PUT [hostname]/img/api/v1.0/resize/[img_id]</h4>
 
 <pre>curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://10la.pythonanywhere.com/img/api/v1.0/resize/3</pre>
 
-<h5>
-<a id="results-6" class="anchor" href="#results-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h5>
+<h4>
+<a id="results-6" class="anchor" href="#results-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results:</h4>
 
 <pre><code>    HTTP/1.0 200 OK
     Content-Type: application/json
@@ -372,8 +407,22 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
     }
 </code></pre>
 
-<h2>
-<a id="improvements" class="anchor" href="#improvements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Improvements:</h2>
+<h4>
+<a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unit Tests</h4>
+
+<p>Below is sample output from running the unit tests from the file <code>test_app.py</code>.  Note that there is a deprecation warning from TensorFlow <a href="https://github.com/tensorflow/tensorflow/issues/1528">that is expected</a>.</p>
+
+<pre><code>    $ python test_app.py
+    ...tensorflow/core/framework/op_def_util.cc:332] Op BatchNormWithGlobalNormalization is deprecated. It will cease to work in GraphDef version 9. Use tf.nn.batch_normalization().
+    ...
+    ----------------------------------------------------------------------
+    Ran 13 tests in 4.186s
+
+    OK
+</code></pre>
+
+<h4>
+<a id="improvements" class="anchor" href="#improvements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Improvements</h4>
 
 <ul>
 <li>better type checking for images</li>
@@ -389,19 +438,17 @@ Date: Wed, 24 Aug 2016 22:43:20 GMT
 </li>
 </ul>
 
-<script src="https://www.embedcurl.com/embedcurl.min.js" async></script>
+<h3>
+<a id="references" class="anchor" href="#references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h3>
 
-    </div>
-
-  </div> <!-- end of #container -->
-
-
-  <script src="/Users/Chris/Library/Application Support/nvALT/jquery.js"></script>    <script>(function($){$('h1,h2,h3,h4').each(function(){$(this).html($(this).text().replace(/([^\\s])\\s+([^\\s]{1,5})\\s*$/,'$1&nbsp;$2'));});$('a[href^=#]').click(function(){if(location.pathname.replace(/^\\//,'')==this.pathname.replace(/^\\//,'')&&location.hostname==this.hostname){var $target=$(this.hash);$target=$target.length&&$target||$('[id='+this.hash.slice(1)+']');if($target.length){var targetOffset=$target.offset().top;$('#contentdiv').animate({scrollTop:targetOffset-40},1000);return false;}}});$('#contentdiv').scroll(function(){if(this.scrollTop>150){if($('#backtotop').length==0)
-$('h1.doctitle').append($('<a href="javascript:void()" id="backtotop" />').text('Back to top').css({'float':'right','display':'none'}).click(function(){$('#contentdiv').animate({scrollTop:0},1000);}));$('#backtotop').fadeIn('slow');}else{$('#backtotop').fadeOut('slow',function(){$(this).remove();});}});})(jQuery);
-  </script>
+<ul>
+<li><a href="http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api">Best Practices for a Pragmatic RESTful API</a></li>
+<li><a href="https://www.youtube.com/watch?v=pZYRC8IbCwk">Is Your REST API RESTful? - PyCon 2015</a></li>
+</ul>
       </section>
     </div>
     <footer>
+      <p>Project maintained by <a href="https://github.com/chriskaschner">chriskaschner</a></p>
       <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
     </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
