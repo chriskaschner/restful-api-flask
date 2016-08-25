@@ -21,7 +21,6 @@ def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized Access'}), 403)
 
 ###todo replace URL with URI to be overly pedantic
-###todo sort out img vs image vs images usage
 ###todo update example images to reflect good predictions
 
 images = [
@@ -81,8 +80,9 @@ def index():
 
 ### test String
 ### curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/images/2
+### curl -u ReturnPath:python -i http://10la.pythonanywhere.com/img/api/v1.0/images/2
 @app.route('/img/api/v1.0/images/<int:img_id>', methods=['GET'])
-# @auth.login_required
+@auth.login_required
 def get_image(img_id):
     img = [img for img in images if img['id'] == img_id]
     if len(img) == 0:
@@ -91,8 +91,9 @@ def get_image(img_id):
 
 ### test String
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X POST -d '{"url":"http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"}' http://127.0.0.1:5000/img/api/v1.0/images
+### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X POST -d '{"url":"http://imgdirect.s3-website-us-west-2.amazonaws.com/neither.jpg"}' http://10la.pythonanywhere.com/img/api/v1.0/images
 @app.route('/img/api/v1.0/images', methods=['POST'])
-#@auth.login_required
+@auth.login_required
 def create_image():
     if not request.json or not 'url' in request.json:
         abort(400)
@@ -114,8 +115,9 @@ def create_image():
 ### test string
 ### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":3}' http://127.0.0.1:5000/img/api/v1.0/inference/3
 ### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://127.0.0.1:5000/img/api/v1.0/inference/2
+### curl -u ReturnPath:python -X PUT -i -H "Content-Type: application/json" -d '{"id":2}' http://10la.pythonanywhere.com/img/api/v1.0/inference/2
 @app.route('/img/api/v1.0/inference/<int:img_id>', methods=['PUT'])
-# @auth.login_required
+@auth.login_required
 def add_inference(img_id):
     img = [img for img in images if img['id'] == img_id]
     if len(img) == 0:
@@ -124,12 +126,12 @@ def add_inference(img_id):
         abort(400)
     url = img[0]['url']
     img[0]['results'] = run_inference_on_image(url)
-    return jsonify({'img': img[0]}), 200
+    return jsonify({'img': make_public_img(img[0])}), 200
 
 ### test String
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
 @app.route('/img/api/v1.0/images/<int:img_id>', methods=['PUT'])
-# @auth.login_required
+@auth.login_required
 def update_image(img_id):
     img = [img for img in images if img['id'] == img_id]
     if len(img) == 0:
@@ -141,11 +143,12 @@ def update_image(img_id):
     img[0]['title'] = request.json.get('title', img[0]['title'])
     img[0]['url'] = request.json.get('url', img[0]['url'])
     return jsonify({'img': img[0]})
+    return jsonify({'img': make_public_img(img[0])}), 200
 
 ### test String
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X DELETE http://127.0.0.1:5000/img/api/v1.0/images/3
 @app.route('/img/api/v1.0/images/<int:img_id>', methods=['DELETE'])
-# @auth.login_required
+@auth.login_required
 def delete_image(img_id):
     img = [img for img in images if img['id'] == img_id]
     if len(img) == 0:
@@ -157,15 +160,16 @@ def delete_image(img_id):
 ### curl -u ReturnPath:python -i http://127.0.0.1:5000/img/api/v1.0/resize/2
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT -d '{"title":"C-ron-ron"}' http://127.0.0.1:5000/img/api/v1.0/images/3
 ### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/img/api/v1.0/resize/3
+### curl -u ReturnPath:python -i -H "Content-Type: application/json" -X PUT http://10la.pythonanywhere.com/img/api/v1.0/resize/2
 @app.route('/img/api/v1.0/resize/<int:img_id>', methods=['PUT'])
-# @auth.login_required
+@auth.login_required
 def get_image_dimensions(img_id):
     img = [img for img in images if img['id'] == img_id]
     if len(img) == 0:
         abort(404)
     url = img[0]['url']
     img[0]['size'] = get_image_dims(url)
-    return jsonify({'img': img[0]})
+    return jsonify({'img': make_public_img(img[0])}), 200
 
 ###todo add this functionality
 # ### test string
@@ -214,8 +218,11 @@ def get_image_dims(imgURL):
      ## else set resized to True and move on
 
 ### Model and Labels files for TensorFlow
-modelFullPath = './static/output_graph.pb'
-labelsFullPath = './static/output_labels.txt'
+modelFullPath = './output_graph.pb'
+labelsFullPath = './output_labels.txt'
+# ### pythonanywhere handles paths differently, uncomment in production
+# modelFullPath = '/home/10la/restful-api-flask/output_graph.pb'
+# labelsFullPath = '/home/10la/restful-api-flask/output_labels.txt'
 
 def create_graph():
     """Creates a graph from saved GraphDef file and returns a saver."""
@@ -272,4 +279,4 @@ def run_inference_on_image(imgURL):
         return results_dict
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
