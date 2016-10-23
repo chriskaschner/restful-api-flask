@@ -219,7 +219,7 @@ def run_inference_on_image(imgURL):
             results_score.append(score)
             # print('%s (score = %.5f)' % (human_string, score))
         # answer = labels[top_k[0]]
-        results = zip(results_name, results_score)
+        # results = zip(results_name, results_score)
         results_dict = {
             "results_name_1": results_name[0],
             "results_score_1": json.JSONEncoder().encode(format(results_score[0], '.4f')),
@@ -228,7 +228,17 @@ def run_inference_on_image(imgURL):
             "results_name_3": results_name[2],
             "results_score_3": json.JSONEncoder().encode(format(results_score[2], '.4f'))
         }
-        return results_dict
+
+        results_dict2={}
+        i = 0
+        for item in results_name:
+            results_dict2[i] = {"results_score": format(results_score[i], '.4f'), "results_name": results_name[i]}
+            i += 1
+        # print results_dict2
+            # return results_dict2
+
+
+        return results_dict2
 
 if __name__ == '__main__':
     app.run()
