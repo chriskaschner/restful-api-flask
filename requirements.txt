@@ -1,0 +1,7 @@
+Flask==0.12.2
+Flask-HTTPAuth==3.2.3
+numpy==1.13.1
+Pillow==4.2.1
+pytest==3.2.1
+requests==2.18.3
+tensorflow==1.2.1
