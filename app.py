@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import tensorflow as tf
 import json
@@ -172,8 +173,12 @@ def get_image_dims(imgURL):
 
 
 ### Model and Labels files for TensorFlow
-modelFullPath = './static/output_graph.pb'
-labelsFullPath = './static/output_labels.txt'
+# todo cleanup filenaming
+filenames = os.listdir("static")
+
+# modelFullPath = '/static/output_graph.pb'
+labelsFullPath = os.path.join("static", filenames[1])
+modelFullPath = os.path.join("static", filenames[0])
 # ### pythonanywhere handles paths differently, uncomment in production
 # modelFullPath = '/home/10la/restful-api-flask/static/output_graph.pb'
 # labelsFullPath = '/home/10la/restful-api-flask/static/output_labels.txt'
