@@ -4,8 +4,7 @@ import tensorflow as tf
 import json
 from urllib.request import urlretrieve
 from flask import Flask, jsonify, render_template, abort, make_response, request, url_for, Markup
-# todo update httpauth to flask_httpauth
-from flask.ext.httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPBasicAuth
 from PIL import Image
 
 auth = HTTPBasicAuth()
