@@ -129,6 +129,7 @@ def update_image(img_id):
         abort(404)
     if not request.json:
         abort(400)
+    # todo fix unicode ref
     if 'title' in request.json and type(request.json['title']) != unicode:
         abort(400)
     img[0]['title'] = request.json.get('title', img[0]['title'])
@@ -191,15 +192,12 @@ def create_graph():
         _ = tf.import_graph_def(graph_def, name='')
 
 def run_inference_on_image(imgURL):
-    # answer = None
-    results_dict = {}
-    results = []
     results_name = []
     results_score = []
     imagePath, headers = urlretrieve(imgURL)
     if not tf.gfile.Exists(imagePath):
         tf.logging.fatal('File does not exist %s', imagePath)
-        return answer
+        return None
 
     image_data = tf.gfile.FastGFile(imagePath, 'rb').read()
 
@@ -222,27 +220,12 @@ def run_inference_on_image(imgURL):
             score = predictions[node_id]
             results_name.append(human_string)
             results_score.append(score)
-            # print('%s (score = %.5f)' % (human_string, score))
-        # answer = labels[top_k[0]]
-        # results = zip(results_name, results_score)
-        results_dict = {
-            "results_name_1": results_name[0],
-            "results_score_1": json.JSONEncoder().encode(format(results_score[0], '.4f')),
-            "results_name_2": results_name[1],
-            "results_score_2": json.JSONEncoder().encode(format(results_score[1], '.4f')),
-            "results_name_3": results_name[2],
-            "results_score_3": json.JSONEncoder().encode(format(results_score[2], '.4f'))
-        }
 
         results_dict2={}
         i = 0
         for item in results_name:
             results_dict2[i] = {"results_score": format(results_score[i], '.4f'), "results_name": results_name[i]}
             i += 1
-        # print results_dict2
-            # return results_dict2
-
-
         return results_dict2
 
 if __name__ == '__main__':
