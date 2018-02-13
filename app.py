@@ -1,7 +1,6 @@
 import os
 import numpy as np
 import tensorflow as tf
-import json
 from urllib.request import urlretrieve
 from flask import Flask, jsonify, render_template, abort, make_response, request, url_for, Markup
 from flask_httpauth import HTTPBasicAuth
