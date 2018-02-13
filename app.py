@@ -2,7 +2,7 @@ import os
 import numpy as np
 import tensorflow as tf
 from urllib.request import urlretrieve
-from flask import Flask, jsonify, render_template, abort, make_response, request, url_for, Markup
+from flask import Flask, jsonify, abort, make_response, request, url_for
 from flask_httpauth import HTTPBasicAuth
 from PIL import Image
 
