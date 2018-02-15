@@ -7,7 +7,7 @@ In a [previous project](chriskaschner.com/retraining), I created a Convolutional
 
 For this project I wanted to build a REST API that allowed me to send requests to that neural network and return a response in JSON.
 
-The original incarnation of this project was developed as a solution for a [GapJumpers Challenge](https://www.gapjumpers.me/questions/return-path/qs-323/)
+The original incarnation of this project was developed as a solution for a [GapJumpers Challenge](https://www.gapjumpers.me/questions/return-path/qs-323/).  That version is still available in the `old-master-p27` [branch here](https://github.com/chriskaschner/restful-api-flask/tree/old-master-p27)
 
 The challenge specifies the following for a successful submission:
 

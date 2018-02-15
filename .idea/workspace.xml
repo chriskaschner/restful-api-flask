@@ -58,8 +58,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="0">
-                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <first_editor relative-caret-position="135">
+                <caret line="9" column="298" lean-forward="false" selection-start-line="9" selection-start-column="298" selection-end-line="9" selection-end-column="298" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -327,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1518729173918</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="REMOVE spare line at beginning of readme">
+      <created>1518729220465</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1518729220465</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -395,7 +402,8 @@
     <MESSAGE value="REMOVE extra flask imports" />
     <MESSAGE value="UPDATE PEP8 formatting" />
     <MESSAGE value="UPDATE README with new requirements and verbiage" />
-    <option name="LAST_COMMIT_MESSAGE" value="UPDATE README with new requirements and verbiage" />
+    <MESSAGE value="REMOVE spare line at beginning of readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="REMOVE spare line at beginning of readme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -566,8 +574,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <first_editor relative-caret-position="135">
+            <caret line="9" column="298" lean-forward="false" selection-start-line="9" selection-start-column="298" selection-end-line="9" selection-end-column="298" />
             <folding />
           </first_editor>
           <second_editor />
