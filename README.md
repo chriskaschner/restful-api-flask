@@ -1,5 +1,3 @@
-This project has been updated for Python 3
-
 # Requirements:
 This project requires**Python 3.6**and[Pipenv](https://github.com/pypa/pipenv)to manage virtual environments and package dependencies.
 
