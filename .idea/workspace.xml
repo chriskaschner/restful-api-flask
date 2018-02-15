@@ -58,8 +58,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="135">
-                <caret line="9" column="298" lean-forward="false" selection-start-line="9" selection-start-column="298" selection-end-line="9" selection-end-column="298" />
+              <first_editor relative-caret-position="15">
+                <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -105,10 +105,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-250" />
+    <option name="x" value="-239" />
     <option name="y" value="-1057" />
-    <option name="width" value="1436" />
-    <option name="height" value="877" />
+    <option name="width" value="1920" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -334,7 +334,14 @@
       <option name="project" value="LOCAL" />
       <updated>1518729220465</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="ADD link to old-master branch">
+      <created>1518729359052</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1518729359052</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -403,7 +410,8 @@
     <MESSAGE value="UPDATE PEP8 formatting" />
     <MESSAGE value="UPDATE README with new requirements and verbiage" />
     <MESSAGE value="REMOVE spare line at beginning of readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="REMOVE spare line at beginning of readme" />
+    <MESSAGE value="ADD link to old-master branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADD link to old-master branch" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -574,8 +582,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="135">
-            <caret line="9" column="298" lean-forward="false" selection-start-line="9" selection-start-column="298" selection-end-line="9" selection-end-column="298" />
+          <first_editor relative-caret-position="15">
+            <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
             <folding />
           </first_editor>
           <second_editor />
