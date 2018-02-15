@@ -2,16 +2,12 @@
 import app
 import unittest
 import json
-import base64
-username = 'ReturnPath'.encode("utf-8")
-password = 'python'.encode("utf-8")
-
-# User_Password_Encoded = base64.b64encode("{0}:{1}".format(username, password))
-User_Password_Encoded = ("{0}:{1}".format(username, password))
-User_Password_Encoded = User_Password_Encoded.encode()
+from base64 import b64encode
+username = 'ReturnPath'
+password = 'python'
 
 headers = {
-    'Authorization': 'Basic ' + User_Password_Encoded
+    'Authorization': 'Basic ' + b64encode("{0}:{1}".format(username, password))
 }
 
 
