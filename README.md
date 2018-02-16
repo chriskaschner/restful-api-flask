@@ -9,7 +9,7 @@ For this project I wanted to build a REST API that allowed me to send requests t
 
 The original incarnation of this project was developed as a solution for a [GapJumpers Challenge](https://www.gapjumpers.me/questions/return-path/qs-323/).  That version is still available in the `old-master-p27` [branch here](https://github.com/chriskaschner/restful-api-flask/tree/old-master-p27)
 
-The challenge specifies the following for a successful submission:
+The challenge specified the following requirements for a successful submission:
 
 - Write a simple Rest API with PHP, Node.js, Ruby, Python or Go.
 - Your API must have:
