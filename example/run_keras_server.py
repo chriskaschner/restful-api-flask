@@ -54,7 +54,7 @@ def base64_decode_image(a, dtype, shape):
 
     # convert the string to a NumPy array using the supplied data
     # type and target shape
-    a = np.frombuffer(base64.decodestring(a), dtype=dtype)
+    a = np.frombuffer(base64.decodebytes(a), dtype=dtype)
     a = a.reshape(shape)
 
     # return the decoded image
