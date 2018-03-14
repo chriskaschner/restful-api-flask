@@ -1,6 +1,6 @@
 # USAGE
 # Start the server:
-# 	python run_keras_server.py
+# 	python keras_server.py
 # Submit a request via cURL:
 # 	curl -X POST -F image=@jemma.png 'http://localhost:5000/predict'
 # Submit a request via Python:
@@ -139,7 +139,7 @@ def classify_process():
         # sleep for a small amount
         time.sleep(SERVER_SLEEP)
 
-@app.route("/predict", methods=["POST"])
+# @app.route("/predict", methods=["POST"])
 def predict():
     # initialize the data dictionary that will be returned from the
     # view
