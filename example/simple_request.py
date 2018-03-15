@@ -3,6 +3,7 @@
 
 # import the necessary packages
 import requests
+import base64
 
 # initialize the Keras REST API endpoint URL along with the input
 # image path
@@ -11,7 +12,7 @@ IMAGE_PATH = "jemma.png"
 
 # load the input image and construct the payload for the request
 image = open(IMAGE_PATH, "rb").read()
-payload = {"image": image}
+payload = {"image": base64.b64encode(image)}
 
 # submit the request
 r = requests.post(KERAS_REST_API_URL, files=payload).json()
