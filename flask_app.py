@@ -1,9 +1,10 @@
 import numpy as np
 import tensorflow as tf
 import json
-import urllib
+import urllib.request
+from threading import Thread
 from flask import Flask, jsonify, render_template, abort, make_response, request, url_for, Markup
-from flask.ext.httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPBasicAuth
 from PIL import Image
 
 auth = HTTPBasicAuth()
@@ -160,7 +161,7 @@ def get_image_dimensions(img_id):
     return jsonify({'img': make_public_img(img[0])}), 200
 
 def get_image_dims(imgURL):
-    imagePath, headers = urllib.urlretrieve(imgURL)
+    imagePath, headers = urllib.request.urlretrieve(imgURL)
     img=Image.open(imagePath)
     width, height = img.size
     size = {
@@ -191,7 +192,7 @@ def run_inference_on_image(imgURL):
     results = []
     results_name = []
     results_score = []
-    imagePath, headers = urllib.urlretrieve(imgURL)
+    imagePath, headers = urllib.request.urlretrieve(imgURL)
     if not tf.gfile.Exists(imagePath):
         tf.logging.fatal('File does not exist %s', imagePath)
         return answer
@@ -240,4 +241,11 @@ def run_inference_on_image(imgURL):
 
 
 if __name__ == '__main__':
+
+    print("* Loading TensorFlow Model...")
+    t = Thread(target=create_graph, args=())
+    t.daemon = True
+    t.start()
+    print("** Model loaded, starting webapp")
+    # Start main webapp
     app.run()
