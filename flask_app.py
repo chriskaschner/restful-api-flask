@@ -5,7 +5,6 @@ import urllib
 from flask import Flask, jsonify, render_template, abort, make_response, request, url_for, Markup
 from flask.ext.httpauth import HTTPBasicAuth
 from PIL import Image
-import keras_server
 
 auth = HTTPBasicAuth()
 app = Flask(__name__)
@@ -239,8 +238,6 @@ def run_inference_on_image(imgURL):
             # return results_dict2
         return results_dict2
 
-@app.route("/predict", methods=["POST"])
-keras_server.predict()
 
 if __name__ == '__main__':
     app.run()
