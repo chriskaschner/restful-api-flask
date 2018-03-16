@@ -17,7 +17,7 @@ payload = {"image": base64.b64encode(image)}
 # submit the request
 r = requests.post(KERAS_REST_API_URL, files=payload).json()
 
-# ensure the request was sucessful
+# ensure the request was successful
 if r["success"]:
 	# loop over the predictions and display them
 	for (i, result) in enumerate(r["predictions"]):
